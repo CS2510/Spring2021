@@ -30,9 +30,9 @@ This file  contains links and text after every class that you can look back to a
 - Students will understand that nodes/game objects have components
 - Students will understand that components respond to draw calls, respond to update calls, and/or carry data.
 
-## Day 4 - Snow Day
+# Day 4 - Snow Day
 
-## Day 5 - 2021-01-27
+# Day 5 - 2021-01-27
 - Students will be familiar with the Stack Overflow survey.
 - Students will have a basic understanding of the history of HTML and browsers
 - Students will have a basic understanding on HTML
@@ -45,7 +45,7 @@ This file  contains links and text after every class that you can look back to a
 - Students will have a basic understanding of JavaScript class syntax
 - Student will be able to implement a basic GameObject instance
 
-## Day 6 - 2021-02-01
+# Day 6 - 2021-02-01
 - Students will have a basic understanding of the difference between game engine code and game code
 - Students will be able to create a GameObject class
 - Students will be able to create a Scene class
@@ -56,7 +56,7 @@ This file  contains links and text after every class that you can look back to a
 - Students will have a basic understanding of the difference between an infinite loop and calling a timer on a thread
 - Students will be able to create a one scene "game" with multiple game objects.
 
-## Day 7 - 2021-02-03
+# Day 7 - 2021-02-03
 - Students will understand the difference between single inheritance and multiple inheritance
 - Students will understand the composition model of multiple inheritance
 - Students can give an example of the problem with single inheritance in a game setting
@@ -65,7 +65,7 @@ This file  contains links and text after every class that you can look back to a
 - Students have a basic understanding of reflection
 - Students will be able to use reflection to call the correct components on a game object
 
-## Day 8 - 2021-02-08
+# Day 8 - 2021-02-08
 - Students will understand the differences between the C, C++, and C# languages.
 - Students will understand the historical relationship between C++, Java, and C#.
 - Students will be familiar with the major commerical game engines.
@@ -75,7 +75,7 @@ This file  contains links and text after every class that you can look back to a
 - Students will be able to explain the pros and cons of using a node-based programming system.
 - Students will understand that there are many game engines that are not available commerically.
 
-## Day 9 - 2021-02-10
+# Day 9 - 2021-02-10
 - Students can describe the role of the heap in RAM
 - Students can describe serialization
 - Students can describe deserialization
@@ -84,19 +84,19 @@ This file  contains links and text after every class that you can look back to a
 - Students can explain the role of a prefab in a game description
 - Students can destinguish the difference between a game engine component and a custom game component.
 
-## Day 10 - 2021-02-15
+# Day 10 - 2021-02-15
 - Students can explain the advantage of a text-based game description
 - Students can create a text-base definition of a prefab
 - Students can create a text-based defintion of a scene
 - Students can create a scene definition that allows for both prefabs an one-off game objects
 
-## Day 11 - 2021-02-17
+# Day 11 - 2021-02-17
 - Students can explain how to manage multiple scenes in a game
 - Students can explain the hazards of switching between scenes that have been instantiated
 - Students can recursively instantiate game objects with children
 - Students can correctly modify prefab game objects to maintain their children
 
-## Day 12 - 2021-02-22
+# Day 12 - 2021-02-22
 - Students understand the difference between digital and analog input
 - Students can identify analogy and digital input on a gamepad
 - Students understand the mechanics of a keyboard as input
@@ -139,3 +139,10 @@ This file  contains links and text after every class that you can look back to a
 - Students can describe how the camera is affected by translations, scales, and rotations
 - Students can describe the changes needed to go from a 2D to 3D game engine in terms of transformations
 
+# Day 17 - 2021-03-10
+- Students will understand the difference between sibling game objects and child objects in terms of transforms
+- Students can describe how to push and pop the transform stack properly inherit transforms
+- Students understand how to scale, rotate, and translate child objects properly
+- Students know the order in which to apply translate, scale, and rotate transforms
+- Students understand the basics of how a polygon geometry is created
+- Students can add child objects using JSON syntax
