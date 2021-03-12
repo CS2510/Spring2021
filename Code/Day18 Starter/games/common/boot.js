@@ -153,9 +153,9 @@ function boot(mainSceneTitle, location, options) {
       let fps = 60;
       setInterval(gameLoop, 1000 / fps)
     })
-    .catch(error => {
-      console.error("Error loading: " + error);
-    })
+    //.catch(error => {
+    //  console.error("Error loading: " + error);
+    //})
 }
 
 export default boot;

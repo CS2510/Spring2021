@@ -5,7 +5,7 @@ export default class Scene {
 
     children = [];
 
-    static deserializeObject(objectDefinition) {
+    static deserializeObject(objectDefinition, sceneStart=true) {
         let gameObject;
         let gameObjectDefinition;
         if (objectDefinition.prefabName) //It's a prefab
@@ -20,6 +20,25 @@ export default class Scene {
         gameObject.transform.scale.x = objectDefinition.sx || 1; //Set the x or default to 0. This is already the default, so this is redundant but very clear
         gameObject.transform.scale.y = objectDefinition.sy || 1; //Set the y or default to 0
         gameObject.transform.rotation = objectDefinition.r || 0; //Set the y or default to 0
+
+        if (objectDefinition.enabled == true || objectDefinition.enabled == false) {
+            //Funny, round about way to check defined v truthy
+            //Notice we are setting the "private" version of the variable, so we don't trigger onEnable quite yet
+            gameObject._enabled = objectDefinition.enabled;
+        }
+        else
+            //Notice we are setting the "private" version of the variable, so we don't trigger onEnable quite yet
+            gameObject._enabled = true; //Default 
+
+        //Call awake if the object is enabled. Note that other game objects in the scene may not have had their awake() called.
+        //start() is called after all game objects in a scene are initialized and called awake().
+        //For details, see https://docs.unity3d.com/Manual/ExecutionOrder.html
+        if (gameObject.enabled && !sceneStart) {
+
+            gameObject.callMethod("awake");
+            gameObject.callMethod("onEnable");
+            gameObject.callMethod("start");
+        }
         return gameObject
     }
 
@@ -57,11 +76,11 @@ export default class Scene {
     draw(ctx) {
         //Clear the screen
         ctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
-        ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         //Loop through all the game objects and render them.
         ctx.save();
-        ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
+        ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)
         ctx.scale(this.camera.transform.scale.x, this.camera.transform.scale.y)
         for (let i = 0; i < this.children.length; i++) {
             let child = this.children[i];
@@ -79,7 +98,7 @@ export default class Scene {
     get camera() {
         return this.getGameObject("MainCamera");
     }
-    get screenCamera(){
+    get screenCamera() {
         return this.getGameObject("ScreenCamera")
     }
 
@@ -121,7 +140,7 @@ export default class Scene {
      * Create a new game object based on the prefab name
      */
     instantiate(objectDescription) {
-        let newObject = Scene.deserializeObject(objectDescription);
+        let newObject = Scene.deserializeObject(objectDescription, false);
         this.addChild(newObject)
 
     }

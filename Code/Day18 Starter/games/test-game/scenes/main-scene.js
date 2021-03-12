@@ -2,31 +2,41 @@ export default {
   name: "MainScene", //Scene name
   children: [ //Game objects in the scene
     {
-      gameObject:{
-        name:"MainCamera",components:[
-          {name:"WorldCameraComponent"}
+      gameObject: {
+        name: "MainCamera", components: [
+          { name: "WorldCameraComponent" },
+          { name: "MainControllerComponent" }
         ]
       }
     },
     {
       gameObject: {
-        name:"ScreenCamera",components:[
-          {name:"ScreenCameraComponent"}
-        ],children:[
+        name: "ScreenCamera", components: [
+          { name: "ScreenCameraComponent" }
+        ], children: [
           {
             gameObject: {
-        name: "ScreenText",
-        components: [
-          {
-            name: "ScreenTextComponent",
-            args: ["Main Scene", {alignment:"left", justification:"bottom"}]
-          }
-        ]
-      },
-      x: 40, y: 40
-    },
+              name: "ScreenText",
+              components: [
+                {
+                  name: "ScreenTextComponent",
+                  args: ["Main Scene", { alignment: "left", justification: "bottom" }]
+                }
+              ]
+            },
+            x: 40, y: 40
+          },
         ]
       }
+    },
+    {
+      gameObject: {
+        name: "Unavailable", components: [
+          { name: "RectangleGeometryComponent", args: [100, 100] },
+          { name: "DrawGeometryComponent", args: ["red"] },
+          { name: "SleepyComponent" }
+        ]
+      }, enabled: false, x: 150, y: 50
     },
     { prefabName: "KeyboardRectangle", x: 300, y: 300 },
     { prefabName: "KeyboardBumpRectangle", x: 50, y: 300 },
@@ -34,7 +44,7 @@ export default {
       prefabName: "ClickToDestroy",
       x: 0, y: 0
     },
-    
+
     {
       gameObject: {
         name: "MainController",
@@ -54,22 +64,22 @@ export default {
       x: 20, y: 40
     },
     {
-      gameObject:{
-        name:"Empty",
-        children:[
+      gameObject: {
+        name: "Empty",
+        children: [
           {
-            gameObject:{
-              name:"rotator",
-              components:[
+            gameObject: {
+              name: "rotator",
+              components: [
                 {
-                  name:"DrawGeometryComponent", //Name of the component
-      
+                  name: "DrawGeometryComponent", //Name of the component
+
                 },
                 {
-                  name:"RotatorComponent"
+                  name: "RotatorComponent"
                 }
               ]
-            },x:100, y:100
+            }, x: 100, y: 100
           }
         ]
       }

@@ -34,7 +34,7 @@ export default class Input {
     this.mouseButtonsUp = [];
 
     this.lastFrameMousePosition = this.frameMousePosition
-    console.log(this.lastFrameMousePosition);
+    //console.log(this.lastFrameMousePosition);
     this.frameMousePosition = new Vector2(this.mousePosition);
     if(this.Remap)
       this.frameMousePosition = this.Remap(new Vector2(this.mousePosition));

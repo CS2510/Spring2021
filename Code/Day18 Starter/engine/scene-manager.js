@@ -11,10 +11,13 @@ export default  class SceneManager {
     let proposedScene = SceneManager.allScenes.find(i => i.name == sceneName);
     if (!sceneName) return console.error("Could now find a scene with the name of " + sceneName);
     if (SceneManager.currentScene && proposedScene.name == SceneManager.currentScene.name) return console.log("Trying to change to the current scene " + sceneName)
-    let scene = Scene.deserialize(proposedScene, SceneManager.allComponents, SceneManager.allPrefabs);  //Deserialize the scene definition
+    let scene = Scene.deserialize(proposedScene, true);  //Deserialize the scene definition
     SceneManager.currentScene = scene;
+    for(let gameObject of SceneManager.currentScene.children){
+      if(!gameObject.enabled) continue;
+      gameObject.awake();
+      gameObject.enable(true);
+    }
     scene.callMethod("start")
-
-
   }
 }

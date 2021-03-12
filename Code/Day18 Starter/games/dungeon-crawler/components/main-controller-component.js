@@ -13,7 +13,7 @@ export default class MainControllerComponent extends Engine.Component {
   update() {
     this.heroX = this.hero.transform.position.x;
     this.heroY = this.hero.transform.position.y;
-    console.log(this.heroX + " " + this.heroY)
+    //console.log(this.heroX + " " + this.heroY)
     
     if(this.heroX < -320){
       //Move left
