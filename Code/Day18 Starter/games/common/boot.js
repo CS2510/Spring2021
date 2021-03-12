@@ -1,3 +1,5 @@
+import Vector2 from "../../engine/vector-2.js";
+
 function boot(mainSceneTitle, location, options) {
 
   //Dynamically import based on the folder location of each game
@@ -83,37 +85,64 @@ function boot(mainSceneTitle, location, options) {
 
         ctx.canvas.width = window.innerWidth;
         ctx.canvas.height = window.innerHeight;
-        //ctx.width = window.innerWidth;
-        //ctx.height = window.innerHeight;
+
+        let cw = ctx.canvas.width;
+        let ch = ctx.canvas.height;
+
+        let dw = dctx.canvas.width;
+        let dh = dctx.canvas.height;
+
+        ctx.fillStyle = "gray";
+        ctx.fillRect(0, 0, cw, ch);
+
+      
 
         let drawMode = "CenterScale"
 
         //Stretch game to window
         if (drawMode == "Stretch")
-          ctx.drawImage(deferredCanvas, 0, 0, ctx.canvas.width, ctx.canvas.height);
+        {
+          ctx.drawImage(deferredCanvas, 0, 0, cw, ch);
+          Engine.Input.Remap = p=>new Vector2(p.x/cw*dw, p.y/ch*dh);
+        }
 
         //Draw in upper-right
-        if (drawMode == "UpperRight")
+        if (drawMode == "UpperRight"){
           ctx.drawImage(deferredCanvas, 0, 0);
+          Engine.Input.Remap = p=>new Vector2(p.x, p.y);
+        }
 
         //Draw centered, but not scaled
-        if (drawMode == "Center")
-          ctx.drawImage(deferredCanvas, (ctx.canvas.width - dctx.canvas.width) / 2, (ctx.canvas.height - dctx.canvas.width) / 2);
-        if(drawMode == "CenterScale"){
-          let dAspectRatio = dctx.canvas.width/dctx.canvas.height;
-          let cAspectRatio = ctx.canvas.width/ctx.canvas.height;
+        if (drawMode == "Center"){
+          ctx.drawImage(deferredCanvas, (cw - dw) / 2, (ch - dh) / 2);
+          Engine.Input.Remap = p=>new Vector2(p.x - (cw-dw)/2, p.y -(ch-dh)/2)
+        }
 
-          let w = ctx.canvas.width;
-          let h = ctx.canvas.height;
+        //Draw centered and scaled to fit the window
+        if(drawMode == "CenterScale"){
+          let dAspectRatio = dw/dh;
+          let cAspectRatio = cw/ch;
+
+          let w = cw;
+          let h = ch;
           if(dAspectRatio < cAspectRatio){
-            h = ctx.canvas.height;
             w = h * dAspectRatio;
           }
           else{
-            w = ctx.canvas.width;
             h = w / dAspectRatio
           }
-          ctx.drawImage(deferredCanvas, (ctx.canvas.width - w) / 2, (ctx.canvas.height - h) / 2, w, h);
+          ctx.drawImage(deferredCanvas, (cw - w) / 2, (ch - h) / 2, w, h);
+          Engine.Input.Remap = p=>{
+            let x = p.x;
+            let y = p.y;
+
+            x -= (cw-w)/2;
+            y -= (ch-h)/2;
+            x*=dw/w;
+            y*=dh/h;
+
+            return new Vector2(x,y);
+          }
         }
 
 

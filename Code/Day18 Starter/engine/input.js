@@ -34,7 +34,10 @@ export default class Input {
     this.mouseButtonsUp = [];
 
     this.lastFrameMousePosition = this.frameMousePosition
+    console.log(this.lastFrameMousePosition);
     this.frameMousePosition = new Vector2(this.mousePosition);
+    if(this.Remap)
+      this.frameMousePosition = this.Remap(new Vector2(this.mousePosition));
 
     this.frameScrollWheel = this.scrollWheel;
     this.scrollWheel = 0;
@@ -93,28 +96,28 @@ export default class Input {
     document.body.addEventListener('contextmenu', contextmenu);
 
     function keydown(event) {
-      console.log("Down: " + event.key);
+      //console.log("Down: " + event.key);
       if (Input.keys[event.key] != true)
         Input.keysDown[event.key] = true;
       Input.keys[event.key] = true;
     }
 
     function keyup(event) {
-      console.log("Up: " + event.key)
+      //console.log("Up: " + event.key)
       if (Input.keys[event.key] != false)
         Input.keysUp[event.key] = true;
       Input.keys[event.key] = false;
     }
 
     function mousedown(event) {
-      console.log("Mouse Down: " + event.button)
+      //console.log("Mouse Down: " + event.button)
       if (Input.mouseButtons["" + event.button] != true)
         Input.mouseButtonsDown["" + event.button] = true;
       Input.mouseButtons["" + event.button] = true;
     }
 
     function mouseup(event) {
-      console.log("Mouse Up: " + event.button)
+      //console.log("Mouse Up: " + event.button)
       if (Input.mouseButtons[event.button] != false)
         Input.mouseButtonsUp[event.button] = true;
       Input.mouseButtons[event.button] = false;
@@ -127,7 +130,7 @@ export default class Input {
     }
 
     function wheelevent(event) {
-      console.log("Scroll Delta: " + event.deltaY)
+      //console.log("Scroll Delta: " + event.deltaY)
       if (event.deltaY != 0)
         Input.mouseScrollDelta = event.deltaY;
     }
