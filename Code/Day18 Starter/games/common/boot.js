@@ -48,6 +48,10 @@ function boot(mainSceneTitle, location, options) {
       const EngineComponents = results[3];
       const GameComponents = results[4];
 
+      globalThis.GameObject = Engine.GameObject;
+      globalThis.Instantiate = i => Engine.SceneManager.currentScene.instantiate(i);
+      globalThis.Destroy = g => g.destroy();
+
       /* Setup our canvas */
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight

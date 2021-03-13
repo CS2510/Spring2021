@@ -13,7 +13,7 @@ export default  class ClickToDestroyComponent extends Engine.Component {
     if(Engine.Input.getMouseButtonDown(0)){
       let mousePosition = Engine.Input.getMousePosition();
       if(mousePosition.x < 100 && mousePosition.y < 200){
-        this.gameObject.destroy();
+        Destroy(this.gameObject);
         let mainController = Engine.SceneManager.currentScene.getGameObject("MainController");
         let scoreComponent = mainController.getComponent("ScoreComponent");
         scoreComponent.score++;

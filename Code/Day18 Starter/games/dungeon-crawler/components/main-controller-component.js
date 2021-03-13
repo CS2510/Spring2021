@@ -7,7 +7,8 @@ export default class MainControllerComponent extends Engine.Component {
     super(gameObject);
   }
   start() {
-    this.hero = SceneManager.currentScene.getGameObject("Hero");
+    this.hero = GameObject.Find("Hero");
+    //this.hero = Engine.SceneManager.currentScene.getGameObject("Hero");
     
   }
   update() {

@@ -16,9 +16,9 @@ export default class MainControllerComponent extends Engine.Component {
     this.scoreComponent = this.gameObject.getComponent("ScoreComponent");
     this.sceneChanger = this.gameObject.getComponent("SceneChangerComponent");
     this.scoreTextComponent = this.gameObject.getComponent("ScreenTextComponent")
-    this.correctTextObject = Engine.SceneManager.currentScene.getGameObject("CorrectText");
+    this.correctTextObject = GameObject.Find("CorrectText");
     this.correctTextComponent = this.correctTextObject.getComponent("ScreenTextComponent")
-    this.guessedLettersObject = Engine.SceneManager.currentScene.getGameObject("GuessedLetters");
+    this.guessedLettersObject = GameObject.Find("GuessedLetters");
     this.guessedLettersComponent = this.guessedLettersObject.getComponent("ScreenTextComponent")
 
   }

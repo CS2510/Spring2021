@@ -21,7 +21,7 @@ export default class MainControllerComponent extends Engine.Component {
       lane.coolDown--;
       if (lane.coolDown <= 0) {
         lane.coolDown = this.coolDownRestart;
-        Engine.SceneManager.currentScene.instantiate({
+        Instantiate({
           prefabName: "Car",
           x: -5, y: i * 1 + 1
         })

@@ -134,6 +134,10 @@ export default class GameObject {
 
     }
 
+    static Find(string){
+        return SceneManager.currentScene.getGameObject(string);
+    }
+
     /**
      * Find a component by name
      */

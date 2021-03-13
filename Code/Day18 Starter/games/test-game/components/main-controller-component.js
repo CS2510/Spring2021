@@ -6,7 +6,7 @@ export default class MainControllerComponent extends Engine.Component {
     this.tick = 0;
   }
   start() {
-    this.unavailable = Engine.SceneManager.currentScene.getGameObject("Unavailable");
+    this.unavailable = GameObject.Find("Unavailable");
   }
   update() {
     this.tick++;

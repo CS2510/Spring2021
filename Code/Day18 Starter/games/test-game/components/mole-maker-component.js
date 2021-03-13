@@ -11,13 +11,13 @@ export default  class MoleMakerComponent extends Engine.Component {
     screenTextComponent.string = score;
 
     //Check to see if need to add another mole
-    if (!Engine.SceneManager.currentScene.getGameObject("ClickToDestroy")) {
+    if (!GameObject.Find("ClickToDestroy")) {
       this.tick++;
     }
     if (this.tick > 100) {
       console.log("Add another")
       this.tick = 0;
-      Engine.SceneManager.currentScene.instantiate({
+      Instantiate({
         prefabName: "ClickToDestroy",
         x: 0, 
         y: 0
