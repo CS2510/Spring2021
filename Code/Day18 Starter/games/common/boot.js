@@ -3,8 +3,10 @@ import Vector2 from "../../engine/vector-2.js";
 function boot(mainSceneTitle, location, options) {
 
   //Dynamically import based on the folder location of each game
-  let promises = [
+  let promisesOne = [
     import("../../engine/engine.js"),
+  ]
+  let promisesTwo = [
     import(`../${location}/scenes/game-scenes.js`),
     import(`../${location}/prefabs/game-prefabs.js`),
     import(`../../engine/components/engine-components.js`),
@@ -36,21 +38,25 @@ function boot(mainSceneTitle, location, options) {
   if (!options.title) title = location;
   document.title = title;
 
-
-
-  //Wait for all the import to load...
-  Promise.all(promises)
+  Promise.all(promisesOne)
     .then(results => {
-      //... and then attach them to the correct values.
       const Engine = results[0];
-      const GameScenes = results[1];
-      const GamePrefabs = results[2];
-      const EngineComponents = results[3];
-      const GameComponents = results[4];
-
       globalThis.GameObject = Engine.GameObject;
       globalThis.Instantiate = i => Engine.SceneManager.currentScene.instantiate(i);
       globalThis.Destroy = g => g.destroy();
+      globalThis.Engine = Engine;
+      globalThis.Input = Engine.Input;
+
+      return Promise.all(promisesTwo)
+    })
+    .then(results => {
+      //... and then attach them to the correct values.
+      const GameScenes = results[0];
+      const GamePrefabs = results[1];
+      const EngineComponents = results[2];
+      const GameComponents = results[3];
+
+      
 
       /* Setup our canvas */
       canvas.width = window.innerWidth;
@@ -69,8 +75,8 @@ function boot(mainSceneTitle, location, options) {
       //This will be our default size unless it is set in the options
       let width = 640;
       let height = 480;
-      if(options?.width) width = options.width;
-      if(options?.height) height = options.height;
+      if (options?.width) width = options.width;
+      if (options?.height) height = options.height;
 
       Engine.SceneManager.screenWidth = width;
       Engine.SceneManager.screenHeight = height;
@@ -99,53 +105,52 @@ function boot(mainSceneTitle, location, options) {
         ctx.fillStyle = "gray";
         ctx.fillRect(0, 0, cw, ch);
 
-      
+
 
         let drawMode = "CenterScale"
 
         //Stretch game to window
-        if (drawMode == "Stretch")
-        {
+        if (drawMode == "Stretch") {
           ctx.drawImage(deferredCanvas, 0, 0, cw, ch);
-          Engine.Input.Remap = p=>new Vector2(p.x/cw*dw, p.y/ch*dh);
+          Engine.Input.Remap = p => new Vector2(p.x / cw * dw, p.y / ch * dh);
         }
 
         //Draw in upper-right
-        if (drawMode == "UpperRight"){
+        if (drawMode == "UpperRight") {
           ctx.drawImage(deferredCanvas, 0, 0);
-          Engine.Input.Remap = p=>new Vector2(p.x, p.y);
+          Engine.Input.Remap = p => new Vector2(p.x, p.y);
         }
 
         //Draw centered, but not scaled
-        if (drawMode == "Center"){
+        if (drawMode == "Center") {
           ctx.drawImage(deferredCanvas, (cw - dw) / 2, (ch - dh) / 2);
-          Engine.Input.Remap = p=>new Vector2(p.x - (cw-dw)/2, p.y -(ch-dh)/2)
+          Engine.Input.Remap = p => new Vector2(p.x - (cw - dw) / 2, p.y - (ch - dh) / 2)
         }
 
         //Draw centered and scaled to fit the window
-        if(drawMode == "CenterScale"){
-          let dAspectRatio = dw/dh;
-          let cAspectRatio = cw/ch;
+        if (drawMode == "CenterScale") {
+          let dAspectRatio = dw / dh;
+          let cAspectRatio = cw / ch;
 
           let w = cw;
           let h = ch;
-          if(dAspectRatio < cAspectRatio){
+          if (dAspectRatio < cAspectRatio) {
             w = h * dAspectRatio;
           }
-          else{
+          else {
             h = w / dAspectRatio
           }
           ctx.drawImage(deferredCanvas, (cw - w) / 2, (ch - h) / 2, w, h);
-          Engine.Input.Remap = p=>{
+          Engine.Input.Remap = p => {
             let x = p.x;
             let y = p.y;
 
-            x -= (cw-w)/2;
-            y -= (ch-h)/2;
-            x*=dw/w;
-            y*=dh/h;
+            x -= (cw - w) / 2;
+            y -= (ch - h) / 2;
+            x *= dw / w;
+            y *= dh / h;
 
-            return new Vector2(x,y);
+            return new Vector2(x, y);
           }
         }
 
@@ -157,9 +162,12 @@ function boot(mainSceneTitle, location, options) {
       let fps = 60;
       setInterval(gameLoop, 1000 / fps)
     })
-    //.catch(error => {
-    //  console.error("Error loading: " + error);
-    //})
+    .catch(error => "Error in promisesOne " + error);
+
+  
+  //.catch(error => {
+  //  console.error("Error loading: " + error);
+  //})
 }
 
 export default boot;
