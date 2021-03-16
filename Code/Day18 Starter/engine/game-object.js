@@ -131,6 +131,7 @@ export default class GameObject {
             let foundChild = child.getGameObject(name);
             if (foundChild) return foundChild;
         }
+        return null;
 
     }
 

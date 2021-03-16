@@ -1,8 +1,8 @@
 import chai from "chai";
 const expect = chai.expect;
-import Vector2 from "../engine/vector-2.js"
+import SceneManager from "../engine/scene-manager.js"
 
-describe("Vector2", function(){
+describe("SceneManager", function(){
 	describe("length", function(){
 		it("Works properly", function(){
 			expect(false).to.be.true;
@@ -13,27 +13,27 @@ describe("Vector2", function(){
 			expect(false).to.be.true;
 		});
 	});
-	describe("plus", function(){
+	describe("changeScene", function(){
 		it("Works properly", function(){
 			expect(false).to.be.true;
 		});
 	});
-	describe("minus", function(){
+	describe("currentScene", function(){
 		it("Works properly", function(){
 			expect(false).to.be.true;
 		});
 	});
-	describe("scale", function(){
+	describe("allComponents", function(){
 		it("Works properly", function(){
 			expect(false).to.be.true;
 		});
 	});
-	describe("normalize", function(){
+	describe("allPrefabs", function(){
 		it("Works properly", function(){
 			expect(false).to.be.true;
 		});
 	});
-	describe("equals", function(){
+	describe("allScenes", function(){
 		it("Works properly", function(){
 			expect(false).to.be.true;
 		});

@@ -1,4 +1,4 @@
-const fs = require('fs')
+import fs from "fs"
 
 let toBuild = [
   { dir: "./engine/components/", name: "engine-components.js" },
