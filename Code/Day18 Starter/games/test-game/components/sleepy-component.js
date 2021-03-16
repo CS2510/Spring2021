@@ -1,7 +1,3 @@
-
-
-
-
 export default  class SleepyComponent extends Engine.Component{
     constructor(gameObject){
         super(gameObject);

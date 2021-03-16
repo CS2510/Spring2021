@@ -1,7 +1,3 @@
-
-
-
-
 export default  class SceneChangerComponent extends Engine.Component {
   constructor(gameObject) {
     super(gameObject);

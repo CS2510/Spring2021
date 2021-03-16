@@ -1,7 +1,3 @@
-
-
-
-
 export default  class RotatorComponent extends Engine.Component{
     constructor(gameObject){
         super(gameObject);

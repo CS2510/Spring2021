@@ -1,7 +1,3 @@
-
-
-
-
 export default  class MoleMakerComponent extends Engine.Component {
   constructor(gameObject) {
     super(gameObject);

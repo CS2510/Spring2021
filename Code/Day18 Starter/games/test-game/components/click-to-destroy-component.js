@@ -1,7 +1,3 @@
-
-
-
-
 export default  class ClickToDestroyComponent extends Engine.Component {
   constructor(gameObject, speed = 1) {
     super(gameObject);

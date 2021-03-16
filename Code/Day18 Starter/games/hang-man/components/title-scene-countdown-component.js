@@ -1,7 +1,3 @@
-
-
-
-
 export default  class TitleSceneCountdownComponent extends Engine.Component {
   constructor(gameObject) {
     super(gameObject);
