@@ -1,5 +1,3 @@
-//
-
 export default  class KeyboardMoveComponent extends Engine.Component {
   constructor(gameObject, speed = 1) {
     super(gameObject);

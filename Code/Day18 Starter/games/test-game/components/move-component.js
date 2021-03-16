@@ -1,5 +1,7 @@
 
 
+
+
 export default  class MoveComponent extends Engine.Component{
     constructor(gameObject){
         super(gameObject);
