@@ -13,9 +13,7 @@ function boot(mainSceneTitle, location, options) {
     import(`../${location}/components/game-components.js`),
   ];
 
-
-
-  //Add the main canvas to the DOCM
+  //Add the main canvas to the DOM
   let canvas = document.createElement("canvas");
   canvas.id = "canv";
   document.body.appendChild(canvas);
@@ -55,8 +53,6 @@ function boot(mainSceneTitle, location, options) {
       const GamePrefabs = results[1];
       const EngineComponents = results[2];
       const GameComponents = results[3];
-
-      
 
       /* Setup our canvas */
       canvas.width = window.innerWidth;
@@ -105,8 +101,6 @@ function boot(mainSceneTitle, location, options) {
         ctx.fillStyle = "gray";
         ctx.fillRect(0, 0, cw, ch);
 
-
-
         let drawMode = "CenterScale"
 
         //Stretch game to window
@@ -153,21 +147,12 @@ function boot(mainSceneTitle, location, options) {
             return new Vector2(x, y);
           }
         }
-
-
-
-        //console.log(ctx.canvas.width);
       }
 
       let fps = 60;
       setInterval(gameLoop, 1000 / fps)
     })
     .catch(error => "Error in promisesOne " + error);
-
-  
-  //.catch(error => {
-  //  console.error("Error loading: " + error);
-  //})
 }
 
 export default boot;
