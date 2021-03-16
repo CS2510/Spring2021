@@ -1,0 +1,82 @@
+import Vector2 from "./vector-2.js"
+import Line from "./line.js"
+import Circle from "./circle.js"
+import Rectangle from "./rectangle.js"
+
+export default class Geometry {
+
+  static collision(one, two) {
+    if (one.geometry instanceof Vector2) {
+      console.log("Vector2")
+      if (two.geometry instanceof Vector2) {
+        if (Vector2.equals(one, two))
+          return true;
+        else
+          return false;
+      }
+      else if (two.geometry instanceof Line) {
+        console.error("Can't do that");
+      }
+      else if (two.geometry instanceof Circle) {
+        console.error("Can't do that");
+
+      }
+      else if (two.geometry instanceof Rectangle) {
+        console.error("Can't do that");
+
+      }
+    }
+    if (one.geometry instanceof Line) {
+      console.log("Line");
+      if (two.geometry instanceof Vector2) {
+        return this.collision(two, one);
+      }
+      else if (two.geometry instanceof Line) {
+        console.error("Can't do that");
+
+      }
+      else if (two.geometry instanceof Circle) {
+        console.error("Can't do that");
+
+      }
+      else if (two.geometry instanceof Rectangle) {
+        console.error("Can't do that");
+
+      }
+    }
+    if (one.geometry instanceof Circle) {
+      console.log("Circle");
+      if (two.geometry instanceof Vector2) {
+        return this.collision(two, one);
+      }
+      else if (two.geometry instanceof Line) {
+        return this.collision(two, one);
+      }
+      else if (two.geometry instanceof Circle) {
+        console.error("Can't do that");
+
+      }
+      else if (two.geometry instanceof Rectangle) {
+        console.error("Can't do that");
+
+      }
+    }
+    if (one.geometry instanceof Rectangle) {
+      console.log("Rectangle");
+      if (two.geometry instanceof Vector2) {
+        return this.collision(two, one);
+      }
+      else if (two.geometry instanceof Line) {
+        return this.collision(two, one);
+      }
+      else if (two.geometry instanceof Circle) {
+        return this.collision(two, one);
+      }
+      else if (two.geometry instanceof Rectangle) {
+        console.error("Can't do that");
+
+      }
+    }
+  }
+
+}

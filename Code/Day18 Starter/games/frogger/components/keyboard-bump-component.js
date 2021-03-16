@@ -10,7 +10,7 @@ export default class KeyboardBumpComponent extends Engine.Component {
     this.speed = speed;
   }
   onKeyDown(keys) {
-    let originalPosition = new Engine.Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+    let originalPosition = new Engine.Geometry.Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
     if (keys["a"] || keys["ArrowLeft"]) {
       this.gameObject.transform.position.x -= 1 * this.speed
       this.gameObject.transform.rotation = -Math.PI/2;

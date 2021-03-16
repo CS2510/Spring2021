@@ -1,4 +1,4 @@
-import Vector2 from "../../engine/vector-2.js";
+import Vector2 from "../../engine/geometry/vector-2.js";
 
 function boot(mainSceneTitle, location, options) {
 
@@ -10,6 +10,7 @@ function boot(mainSceneTitle, location, options) {
     import(`../${location}/scenes/game-scenes.js`),
     import(`../${location}/prefabs/game-prefabs.js`),
     import(`../../engine/components/engine-components.js`),
+    import(`../../engine/geometry/engine-geometry.js`),
     import(`../${location}/components/game-components.js`),
   ];
 
@@ -52,7 +53,8 @@ function boot(mainSceneTitle, location, options) {
       const GameScenes = results[0];
       const GamePrefabs = results[1];
       const EngineComponents = results[2];
-      const GameComponents = results[3];
+      const EngineGeometry = results[3]
+      const GameComponents = results[4];
 
       /* Setup our canvas */
       canvas.width = window.innerWidth;
@@ -61,6 +63,8 @@ function boot(mainSceneTitle, location, options) {
 
       //Add event listeners to the page
       Engine.Input.attach(document);
+
+      Engine.SceneManager.Geometry = EngineGeometry;
 
       //Add the components, prefabs, and scenes to the SceneManager for easy access in any file
       Engine.SceneManager.allComponents = [...Object.keys(Engine.EngineComponents).map(i => EngineComponents[i]), ...Object.keys(GameComponents).map(i => GameComponents[i])];

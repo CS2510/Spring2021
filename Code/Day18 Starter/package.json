@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/cs2510/Spring2021#readme",
   "dependencies": {
+    "canvas": "^2.7.0",
     "chai": "^4.3.4",
     "chai-arrays": "^2.2.0",
     "mocha": "^8.3.2",

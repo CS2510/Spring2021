@@ -1,7 +1,10 @@
+import Geometry from "./geometry.js"
+
 export default  class Vector2{
   x;
   y;
   constructor(one, two){
+    
     if(arguments.length == 0){
       this.x = 0; 
       this.y = 0;
@@ -83,5 +86,6 @@ export default  class Vector2{
   equals(other){
     return Vector2.equals(this, other);
   }
+
 
 }

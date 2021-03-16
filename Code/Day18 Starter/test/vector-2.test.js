@@ -1,6 +1,6 @@
 import chai from "chai";
 const expect = chai.expect;
-import Vector2 from "../engine/vector-2.js"
+import Vector2 from "../engine/geometry/vector-2.js"
 
 describe("Vector2", function(){
 	describe("length", function(){

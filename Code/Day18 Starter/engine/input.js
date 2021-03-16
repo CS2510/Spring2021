@@ -1,6 +1,6 @@
 import SceneManager from "./scene-manager.js";
 import Scene from "./scene.js";
-import Vector2 from "./vector-2.js"
+import Vector2 from "./geometry/vector-2.js"
 
 export default class Input {
   static keys = [];
