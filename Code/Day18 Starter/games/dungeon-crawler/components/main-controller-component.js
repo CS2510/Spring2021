@@ -1,4 +1,4 @@
-import * as Engine from "../../../engine/engine.js"
+//
 
 const SceneManager = Engine.SceneManager;
 

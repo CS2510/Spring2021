@@ -1,4 +1,4 @@
-import * as Engine from "../../../engine/engine.js"
+
 
 export default  class SleepyComponent extends Engine.Component{
     constructor(gameObject){
