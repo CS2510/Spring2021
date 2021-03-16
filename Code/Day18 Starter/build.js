@@ -1,8 +1,19 @@
 const fs = require('fs')
 
 let toBuild = [
-  { dir: "./components/", name: "engine-components.js" },
+  { dir: "./engine/components/", name: "engine-components.js" },
 ]
+
+let files = fs.readdirSync("./games/");
+for(let i = 0; i < files.length; i++){
+  let file = files[i];
+  if(file.includes("common")) continue;
+  toBuild.push({dir:"./games/" + file + "/components/", name:"game-components.js"})
+  toBuild.push({dir:"./games/" + file + "/prefabs/", name:"game-prefabs.js"})
+  toBuild.push({dir:"./games/" + file + "/scenes/", name:"game-scenes.js"})
+}
+
+
 
 for (let i = 0; i < toBuild.length; i++) {
 
