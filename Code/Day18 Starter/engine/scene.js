@@ -5,7 +5,7 @@ export default class Scene {
 
     children = [];
 
-    static deserializeObject(objectDefinition, sceneStart=true) {
+    static deserializeObject(objectDefinition, sceneStart = true) {
         let gameObject;
         let gameObjectDefinition;
         if (objectDefinition.prefabName) //It's a prefab
@@ -45,10 +45,11 @@ export default class Scene {
     static deserialize(sceneDefinition) {
         let toReturn = new Scene(); //Create a new Scene
         toReturn.name = sceneDefinition.name; //Set the scene's name (for reference later when we are changing scenes)
-        for (let objectDefinition of sceneDefinition.children) { //Loop over all the children.
-            let gameObject = this.deserializeObject(objectDefinition)
-            toReturn.addChild(gameObject);
-        }
+        if (sceneDefinition.children)
+            for (let objectDefinition of sceneDefinition.children) { //Loop over all the children.
+                let gameObject = this.deserializeObject(objectDefinition)
+                toReturn.addChild(gameObject);
+            }
         return toReturn;
     }
 

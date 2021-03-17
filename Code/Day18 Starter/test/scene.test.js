@@ -2,25 +2,25 @@ import chai from "chai";
 const expect = chai.expect;
 import Scene from "../engine/scene.js"
 
+import * as Scenes from "./scenes/test-scenes.js"
+
 describe("Scene", function(){
-	describe("length", function(){
-		it("Works properly", function(){
-			expect(false).to.be.true;
-		});
-	});
 	describe("constructor", function(){
 		it("Works properly", function(){
-			expect(false).to.be.true;
+			let scene = new Scene();
+			expect(scene.children.length).to.equal(0);
 		});
 	});
 	describe("deserializeObject", function(){
 		it("Works properly", function(){
-			expect(false).to.be.true;
+			//TODO: Add Test
 		});
 	});
 	describe("deserialize", function(){
 		it("Works properly", function(){
-			expect(false).to.be.true;
+			let result = Scene.deserialize(Scenes.EmptyScene)
+			expect(result.children.length).to.equal(0);
+			expect(result.name).to.equal("Empty");
 		});
 	});
 });

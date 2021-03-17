@@ -12,10 +12,9 @@ export default  class Vector2{
     }
     if(arguments.length == 1){
       if(Array.isArray(one)){
-        if(one.length <= 1){
+        if(one.length != 2){
           //Bad array length
-          console.error("If you pass an array in as the Vector2 constructor, it must have at least two values")
-          return;
+          throw "If you pass an array in as the Vector2 constructor, it must have at least two values"
         }
         this.x = one[0];
         this.y = one[1];
@@ -23,8 +22,8 @@ export default  class Vector2{
       }
       else{
         if((!one.x && one.x != 0) || (!one.y && one.y != 0)){
-          console.error("If you pass a non-array as a single arguments to the Vector2 constructor, it must have 'x' and 'y' keys")
-          return;
+          throw "If you pass a non-array as a single arguments to the Vector2 constructor, it must have 'x' and 'y' keys";
+          
         }
         this.x = one.x;
         this.y = one.y;
@@ -66,6 +65,12 @@ export default  class Vector2{
   lengthSquared(){
     return this.x * this.x + this.y * this.y;
   }
+  static length(vector2){
+    return Math.sqrt(vector2.lengthSquared())
+  }
+  static lengthSquared(vector2){
+    return vector2.x * vector2.x + vector2.y * vector2.y;
+  }
 
   static normalize(vector2){
     let toReturn = new Vector2(vector2);
@@ -74,7 +79,7 @@ export default  class Vector2{
   }
 
   normalize(){
-    let length = this.getLength;
+    let length = this.length();
     this.x /= length;
     this.y /= length;
   }

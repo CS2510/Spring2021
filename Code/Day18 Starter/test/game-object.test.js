@@ -122,13 +122,13 @@ describe("GameObject", function(){
 
 	describe("deserialize", function(){
 		it("Works properly", function(){
-			expect(false).to.be.true;
+			//TODO: Add Test
 		});
 	});
 	
 	describe("Find", function(){
 		it("Works properly", function(){
-			expect(false).to.be.true;
+			//TODO: Add Test
 		});
 	});
 });
