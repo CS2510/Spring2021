@@ -2,14 +2,16 @@ import Vector2 from "./vector-2.js"
 import Line from "./line.js"
 import Circle from "./circle.js"
 import Rectangle from "./rectangle.js"
+import Matrix from "./matrix.js"
 
 export default class Geometry {
 
   static collision(one, two) {
     if (one.geometry instanceof Vector2) {
-      console.log("Vector2")
       if (two.geometry instanceof Vector2) {
-        if (Vector2.equals(one, two))
+        let _one = Matrix.multiply(one.matrix, one.geometry);
+        let _two = Matrix.multiply(two.matrix, two.geometry);
+        if (Vector2.closeTo(_one, _two))
           return true;
         else
           return false;

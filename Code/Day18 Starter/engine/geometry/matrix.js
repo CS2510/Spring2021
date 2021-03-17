@@ -3,7 +3,9 @@ import Vector3 from "./vector-3.js"
 
 export default class Matrix {
   values = [];
-  static identity = new Matrix();
+  static get identity(){
+    return new Matrix();
+  } 
 
   constructor() {
     //console.log("Matrix constructor called with " + arguments.length + " arguments")
@@ -12,7 +14,7 @@ export default class Matrix {
       this.values = [1, 0, 0, 0, 1, 0, 0, 0, 1];
     }
     else if (arguments.length == 9) {
-      this.values = arguments;
+      this.values = [...arguments];
     }
     else {
       throw new "Wrong number of arguments";
@@ -22,16 +24,16 @@ export default class Matrix {
   isIdentity() {
     this.equals(this.identity);
   }
-  at(x,y){
-    return this.values[3*y+x];
+  at(x, y) {
+    return this.values[3 * y + x];
   }
-  setAt(x,y, value){
-    this.values[3*y+x] = value;
+  setAt(x, y, value) {
+    this.values[3 * y + x] = value;
     return this;
   }
-  equals(other){
-    for(let i = 0; i < this.values.length; i++){
-      if(other.values[i] != this.values[i]) return false;
+  equals(other) {
+    for (let i = 0; i < this.values.length; i++) {
+      if (other.values[i] != this.values[i]) return false;
     }
     return true;
   }
@@ -45,39 +47,54 @@ export default class Matrix {
   get m32() { return this.at(2, 1) }
   get m33() { return this.at(2, 2) }
 
-  row(r){
-    return this.values.slice(0+3*r, 3+3*r);
+  row(r) {
+    return this.values.slice(0 + 3 * r, 3 + 3 * r);
   }
 
-  multiply(other){
-    if(other instanceof Vector2){
+  static multiply(one, two) {
+    return new Matrix(...one.values).multiply(two);
+  }
+
+  rotate(radians) {
+    let other = new Matrix(
+      Math.cos(radians), -Math.sin(radians), 0,
+      Math.sin(radians), Math.cos(radians), 0,
+      0, 0, 1
+    )
+    this.multiply(other);
+    return this;
+  }
+
+  multiply(other) {
+    if (other instanceof Vector2) {
       return this.multiply(Vector3.fromVector2(other)).asVector2();
 
     }
-    else if(other instanceof Vector3){
+    else if (other instanceof Vector3) {
       let toReturn = new Vector3();
-      for(let i = 0; i < 3; i++){
+      for (let i = 0; i < 3; i++) {
         let sum = 0;
-        for(let j = 0; j < 3; j++){
+        for (let j = 0; j < 3; j++) {
           sum += other.asArray()[j] * this.row(i)[j];
         }
         toReturn.setAt(i, sum);
       }
       return toReturn;
     }
-    else if(other instanceof Matrix){
+    else if (other instanceof Matrix) {
       let toReturn = new Matrix();
-      for(let i = 0; i < 3; i++){
-        for(let j = 0; j < 3; j++){
-          let sum =0;
-          for(let k = 0; k < 3; k++){
-            sum += this.at(i,k)*other.at(k,j);
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          let sum = 0;
+          for (let k = 0; k < 3; k++) {
+            sum += this.at(i, k) * other.at(k, j);
           }
-          toReturn.setAt(i,j,sum);
+          toReturn.setAt(i, j, sum);
         }
 
       }
-      return toReturn;
+      this.values = toReturn.values;
+      return this;
     }
     else
       throw "Invalid argument to multiply."

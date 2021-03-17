@@ -91,6 +91,12 @@ export default  class Vector2{
   equals(other){
     return Vector2.equals(this, other);
   }
+  closeTo(other){
+    return Math.abs(this.x - other.x) < .000001 && Math.abs(this.y - other.y) < .000001
+  }
+  static closeTo(one, two){
+    return one.closeTo(two);
+  }
 
 
 }
