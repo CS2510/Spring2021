@@ -6,7 +6,7 @@ export default class Matrix {
   static identity = new Matrix();
 
   constructor() {
-    console.log("Matrix constructor called with " + arguments.length + " arguments")
+    //console.log("Matrix constructor called with " + arguments.length + " arguments")
     if (arguments.length == 0) {
       //We're okay
       this.values = [1, 0, 0, 0, 1, 0, 0, 0, 1];

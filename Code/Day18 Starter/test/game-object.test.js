@@ -7,6 +7,7 @@ chai.use(sinonChai);
 import GameObject from "../engine/game-object.js"
 import * as Engine from "../engine/engine.js"
 import * as EngineComponents from "../engine/components/engine-components.js"
+import * as TestGameObjects from "./game-objects/test-game-objects.js"
 
 describe("GameObject", function(){
 	
@@ -121,8 +122,20 @@ describe("GameObject", function(){
 	});
 
 	describe("deserialize", function(){
-		it("Works properly", function(){
-			//TODO: Add Test
+		it("Deserializes a simple game object", function(){
+			let result = GameObject.deserialize(TestGameObjects.SimpleGameObject);
+			expect(result.name).to.equal("Simple Name");
+			expect(result.transform.children.length).to.equal(0);
+			expect(result.components.length).to.equal(1);
+			expect(result.components[0]).to.be.instanceOf(Engine.EngineComponents.TransformComponent);
+		});
+		it("Deserializes a definition with a component", function(){
+			let result = GameObject.deserialize(TestGameObjects.OneComponentGameObject);
+			expect(result.name).to.equal("One Component");
+			expect(result.transform.children.length).to.equal(0);
+			expect(result.components.length).to.equal(2);
+			expect(result.components[0]).to.be.instanceOf(Engine.EngineComponents.TransformComponent);
+			expect(result.components[1]).to.be.instanceOf(Engine.EngineComponents.CircleGeometryComponent);
 		});
 	});
 	
