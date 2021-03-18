@@ -5,6 +5,14 @@ export default class Vector3{
   y;
   z;
 
+  static get Zero(){
+    return new Vector3(0,0,0);
+  }
+
+  static get ZeroW(){
+    return new Vector3(0,0,1);
+  }
+
   constructor(one, two, three){
   
     if(arguments.length == 0){

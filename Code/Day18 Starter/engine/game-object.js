@@ -19,7 +19,7 @@ export default class GameObject {
         if (gameObjectDefinition.children)
             for (let childDefinition of gameObjectDefinition.children) {
                 let child = Scene.deserializeObject(childDefinition);
-                toReturn.transform.children.push(child);
+                toReturn.addChild(child);
             }
         return toReturn;
     }
@@ -27,13 +27,14 @@ export default class GameObject {
     /**
      * Set the default values of x and y
      */
-    constructor() {
+    constructor(name) {
+        this.name = name;
         //this.x = 0;
         //this.y = 0;
         this.components = [];
         //this.children = [];
         this.markedDestroy = false;
-        this.components.push(new Engine.TransformComponent())
+        this.components.push(new Engine.TransformComponent(this))
         this._enabled = true;
         this._awoken = false;
 
@@ -83,6 +84,11 @@ export default class GameObject {
                 child._disable(deep);
             }
         }
+    }
+
+    addChild(gameObject){
+        this.transform.children.push(gameObject);
+        gameObject.transform.parent = this.transform;
     }
     /**
      * Update the game by iterating over every game object and calling update if available.

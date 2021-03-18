@@ -1,5 +1,6 @@
 export {default as ChangeSceneComponent} from "./change-scene-component.js"
 export {default as ClickToDestroyComponent} from "./click-to-destroy-component.js"
+export {default as CollisionControllerComponent} from "./collision-controller-component.js"
 export {default as KeyboardBumpComponent} from "./keyboard-bump-component.js"
 export {default as KeyboardMoveComponent} from "./keyboard-move-component.js"
 export {default as MainControllerComponent} from "./main-controller-component.js"

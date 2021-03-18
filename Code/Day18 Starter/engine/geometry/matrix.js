@@ -37,6 +37,13 @@ export default class Matrix {
     }
     return true;
   }
+  nearlyEquals(other){
+    let threshold = .00001;
+    for (let i = 0; i < this.values.length; i++) {
+      if (Math.abs(other.values[i] - this.values[i]) > threshold) return false;
+    }
+    return true;
+  }
   get m11() { return this.at(0, 0) }
   get m12() { return this.at(0, 1) }
   get m13() { return this.at(0, 2) }
@@ -61,6 +68,24 @@ export default class Matrix {
       Math.sin(radians), Math.cos(radians), 0,
       0, 0, 1
     )
+    this.multiply(other);
+    return this;
+  }
+  translate(dx, dy){
+    let other = new Matrix(
+      1, 0, dx,
+      0, 1, dy,
+      0, 0, 1
+    )
+    this.multiply(other);
+    return this;
+  }
+  scale(sx, sy){
+    let other = new Matrix(
+      sx, 0, 0,
+      0, sy, 0,
+      0, 0, 1
+    );
     this.multiply(other);
     return this;
   }

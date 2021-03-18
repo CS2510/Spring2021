@@ -37,10 +37,10 @@ export default  class Vector2{
   }
 
   static plus(one, two){
-    return new Vector2(one.x + two.x, one.y+two.y);
+    return one.clone().plus(two);
   }
   static minus(one, two){
-    return new Vector2(one.x - two.x, one.y - two.y);
+    return one.clone().minus(two);
   }
   static scale(one, scalar){
     return new Vector2(one.x * scalar, one.y * scalar);
@@ -49,14 +49,17 @@ export default  class Vector2{
   plus(other){
     this.x += other.x;
     this.y += other.y;
+    return this;
   }
   minus(other){
     this.x -= other.x;
     this.y -= other.y;
+    return this;
   }
   scale(scalar){
     this.x *= scalar;
     this.y *= scalar;
+    return this;
   }
 
   length(){
@@ -72,8 +75,23 @@ export default  class Vector2{
     return vector2.x * vector2.x + vector2.y * vector2.y;
   }
 
+  distanceBetween(other){
+    return Vector2.minus(this, other).length();
+  }
+  static distanceBetween(one, two){
+    return one.distanceBetween(two);
+  }
+
+  clone(){
+    return new Vector2(this.x, this.y);
+  }
+  static clone(one){
+    return new Vector2(one.x, one.y);
+  }
+
+
   static normalize(vector2){
-    let toReturn = new Vector2(vector2);
+    let toReturn = vector2.clone();
     toReturn.normalize();
     return toReturn;
   }

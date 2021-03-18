@@ -1,3 +1,4 @@
+import { expect } from "chai";
 
 async function boot(options) {
 
@@ -66,16 +67,15 @@ async function boot(options) {
   // })
 }
 
-async function boot2() {
-  return "hyde";
-}
+
 
 
 export const mochaHooks = {
   beforeAll: [ async function(){
     this.timeout(0);
     await boot({});
-
+    expect(globalThis.Engine).to.not.be.undefined;
+    console.log(globalThis.Engine);
   }
   ]
 };

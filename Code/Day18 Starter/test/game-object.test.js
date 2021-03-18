@@ -22,6 +22,15 @@ describe("GameObject", function(){
 			expect(gameObject._awoken).to.be.false;
 			expect(gameObject.enabled).to.be.true;
 			expect(gameObject.transform).to.equal(gameObject.components[0])
+			expect(gameObject.transform.gameObject).to.equal(gameObject);
+		});
+		it("Constructs hierarchyproperly", function(){
+			let parent = new GameObject("Parent");
+			let child = new GameObject("Child");
+			parent.addChild(child);
+			
+			expect(parent.transform.parent).to.be.null;
+			expect(child.transform.parent).to.equal(parent.transform);
 		});
 	});
 	describe("enable", function(){
