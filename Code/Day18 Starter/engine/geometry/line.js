@@ -1,4 +1,4 @@
-import Geometry from "./geometry.js"
+import Geometry from "./collisions.js"
 export default class Line{
   constructor(){
     

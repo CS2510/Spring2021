@@ -28,21 +28,24 @@ export default {
         ]
       }
     },
-    {
-      gameObject: {
-        name: "Rectangle", components: [
-          { name: "RectangleGeometryComponent", args: [100, 100] },
-          { name: "DrawGeometryComponent", args: ["red"] },
-        ]
-      }, x: 150, y: 50
-    },
+    
     {
       gameObject: {
         name: "Circle", components: [
           { name: "CircleGeometryComponent", args: [50] },
           { name: "DrawGeometryComponent", args: ["green"] },
+        ],
+        children:[
+          {
+            gameObject: {
+              name: "Rectangle", components: [
+                { name: "RectangleGeometryComponent", args: [100, 100] },
+                { name: "DrawGeometryComponent", args: ["red"] },
+              ]
+            }, x: 150, y: 50
+          },
         ]
-      }, x: -50, y: -50
+      }, x: 0, y: 0
     },
     {
       gameObject: {

@@ -81,8 +81,10 @@ export default class Scene {
 
         //Loop through all the game objects and render them.
         ctx.save();
-        ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)
+        ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
+        ctx.translate(this.camera.transform.position.x, this.camera.transform.position.y)
         ctx.scale(this.camera.transform.scale.x, this.camera.transform.scale.y)
+        ctx.rotate(this.camera.transform.rotation);
         for (let i = 0; i < this.children.length; i++) {
             let child = this.children[i];
             if (child.name == "ScreenCamera") continue;

@@ -1,5 +1,5 @@
 export {default as Vector2} from "./vector-2.js"
-export {default as Geometry} from "./geometry.js"
+export {default as Collisions} from "./collisions.js"
 export {default as Line} from "./line.js"
 export {default as Circle} from "./circle.js"
 export {default as Rectangle} from "./rectangle.js"

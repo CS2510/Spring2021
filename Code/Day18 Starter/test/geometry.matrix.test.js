@@ -67,4 +67,65 @@ describe("Matrix", function(){
 
     })
   })
+  describe("Extracts", function(){
+    it("Extracts the correct translation", function(){
+      let matrix = new Matrix(
+        1,0,1,
+        0,1,2,
+        0,0,1
+      );
+      let extracted = matrix.extractTranslation();
+      expect(extracted.equals(new Vector2(1,2))).to.be.true;
+    })
+    it("Extracts the correct scale", function(){
+      let matrix = new Matrix(
+        3,0,1,
+        0,4,2,
+        0,0,1
+      );
+      let extracted = matrix.extractScale();
+      expect(extracted.equals(new Vector2(3,4))).to.be.true;
+    })
+    it("Extracts the correct rotation", function(){
+      let theta = Math.PI/2;
+      let c = Math.cos(theta);
+      let s = Math.sin(theta);
+      let matrix = new Matrix(
+        c,-s,0,
+        s,c,0,
+        0,0,1
+      );
+      let extracted = matrix.extractRotation();
+      expect(extracted).to.equal(theta);
+    })
+    it("Extracts the correct scale of compound matrix", function(){
+      let theta = Math.PI/2;
+      let c = Math.cos(theta);
+      let s = Math.sin(theta);
+
+      let sx = 3;
+      let sy = 4;
+      let matrix = new Matrix(
+        sx*c,-s,0,
+        s,sy*c,0,
+        0,0,1
+      );
+      let extracted = matrix.extractRotation();
+      expect(extracted).to.equal(theta);
+    })
+    it("Extracts the correct rotation of compound matrix", function(){
+      let theta = Math.PI/2;
+      let c = Math.cos(theta);
+      let s = Math.sin(theta);
+      let sx = 3;
+      let sy = 4
+      let matrix = new Matrix(
+        sx*c,-s,0,
+        s,sy*c,0,
+        0,0,1
+      );
+      let extracted = matrix.extractScale();
+      expect(extracted.equals(new Vector2(sx, sy))).to.be.true;
+    })
+  })
 })

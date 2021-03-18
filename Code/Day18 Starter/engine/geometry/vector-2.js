@@ -1,4 +1,4 @@
-import Geometry from "./geometry.js"
+import Geometry from "./collisions.js"
 
 export default  class Vector2{
   x;
@@ -100,6 +100,7 @@ export default  class Vector2{
     let length = this.length();
     this.x /= length;
     this.y /= length;
+    return this;
   }
 
   static equals(one, two){

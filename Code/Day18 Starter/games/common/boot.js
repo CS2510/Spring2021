@@ -56,6 +56,8 @@ function boot(mainSceneTitle, location, options) {
       const EngineGeometry = results[3]
       const GameComponents = results[4];
 
+      globalThis.Geometry = EngineGeometry;
+
       /* Setup our canvas */
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight
@@ -145,8 +147,11 @@ function boot(mainSceneTitle, location, options) {
 
             x -= (cw - w) / 2;
             y -= (ch - h) / 2;
+            
             x *= dw / w;
             y *= dh / h;
+            x -= width/2;
+            y -= height/2
 
             return new Vector2(x, y);
           }

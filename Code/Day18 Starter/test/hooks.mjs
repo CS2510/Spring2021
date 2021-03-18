@@ -30,6 +30,8 @@ async function boot(options) {
   const EngineGeometry = results[3]
   const GameComponents = results[4];
 
+  globalThis.Geometry = EngineGeometry;
+
   Engine.SceneManager.Geometry = EngineGeometry;
 
   //Add the components, prefabs, and scenes to the SceneManager for easy access in any file

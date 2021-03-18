@@ -4,8 +4,9 @@ import Line from "./line.js"
 import Circle from "./circle.js"
 import Rectangle from "./rectangle.js"
 import Matrix from "./matrix.js"
+import Polygon from "./polygon.js"
 
-export default class Geometry {
+export default class Collisions {
 
   static collision(one, two) {
     if (one.geometry instanceof Vector2) {
@@ -33,7 +34,41 @@ export default class Geometry {
 
       }
       else if (two.geometry instanceof Rectangle) {
-        console.error("Can't do that");
+        let _one = Matrix.multiply(one.matrix, one.geometry);
+        _one.minus(two.matrix.extractTranslation());
+        let corners = two.geometry.corners;
+
+        for(let i = 0; i < corners.length; i++){
+          corners[i] = two.matrix.multiply(corners[i])
+        }
+
+        let v1 = corners[1].clone().minus(corners[0]).normalize();
+        let v2 = corners[3].clone().minus(corners[0]).normalize();
+        let v1l = corners[1].clone().minus(corners[0]).length();
+        let v2l = corners[3].clone().minus(corners[0]).length();
+
+        let changeOfBasis = new Matrix(
+          v2.x, v2.y, 0,
+          v1.x, v1.y, 0,
+          0, 0, 1
+        );
+
+        let newPoint = changeOfBasis.multiply(_one);
+        if(newPoint.x >= -v2l/2&&
+          newPoint.x <= v2l/2 &&
+          newPoint.y >= -v1l/2 &&
+          newPoint.y <= v1l/2
+          )
+        // if(newPoint.x >= -two.geometry.width/2 &&
+        //   newPoint.x <= two.geometry.width/2 &&
+        //   newPoint.y >= -two.geometry.height/2 &&
+        //   newPoint.y <= two.geometry.height/2
+        //   )
+          return true;
+        else
+          return false;
+
+        
       }
       else if (two.geometry instanceof Rectangle) {
         console.error("Can't do that");

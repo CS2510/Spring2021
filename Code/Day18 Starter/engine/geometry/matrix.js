@@ -3,9 +3,9 @@ import Vector3 from "./vector-3.js"
 
 export default class Matrix {
   values = [];
-  static get identity(){
+  static get identity() {
     return new Matrix();
-  } 
+  }
 
   constructor() {
     //console.log("Matrix constructor called with " + arguments.length + " arguments")
@@ -24,11 +24,11 @@ export default class Matrix {
   isIdentity() {
     this.equals(this.identity);
   }
-  at(x, y) {
-    return this.values[3 * y + x];
+  at(row, column) {
+    return this.values[3 * row + column];
   }
-  setAt(x, y, value) {
-    this.values[3 * y + x] = value;
+  setAt(row, column, value) {
+    this.values[3 * row + column] = value;
     return this;
   }
   equals(other) {
@@ -37,7 +37,7 @@ export default class Matrix {
     }
     return true;
   }
-  nearlyEquals(other){
+  nearlyEquals(other) {
     let threshold = .00001;
     for (let i = 0; i < this.values.length; i++) {
       if (Math.abs(other.values[i] - this.values[i]) > threshold) return false;
@@ -71,21 +71,37 @@ export default class Matrix {
     this.multiply(other);
     return this;
   }
-  translate(dx, dy){
-    let other = new Matrix(
-      1, 0, dx,
-      0, 1, dy,
-      0, 0, 1
-    )
+  translate(one, two) {
+    let other;
+    if (!two && two != 0)
+      other = new Matrix(
+        1, 0, one.x,
+        0, 1, one.y,
+        0, 0, 1
+      )
+    else
+      other = new Matrix(
+        1, 0, one,
+        0, 1, two,
+        0, 0, 1
+      )
     this.multiply(other);
     return this;
   }
-  scale(sx, sy){
-    let other = new Matrix(
-      sx, 0, 0,
-      0, sy, 0,
-      0, 0, 1
-    );
+  scale(one, two) {
+    let other;
+    if (!two && two != 0)
+      other = new Matrix(
+        one.x, 0, 0,
+        0, one.y, 0,
+        0, 0, 1
+      );
+    else
+      other = new Matrix(
+        one, 0, 0,
+        0, two, 0,
+        0, 0, 1
+      );
     this.multiply(other);
     return this;
   }
@@ -125,6 +141,17 @@ export default class Matrix {
       throw "Invalid argument to multiply."
 
   }
+  extractTranslation() {
+    return new Vector2(this.m13, this.m23);
+  }
+  extractRotation() {
+    return Math.asin(this.m21);
+
+  }
+  extractScale() {
+    let cosineOfRotation = Math.cos(this.extractRotation());
+    return new Vector2(this.m11 / cosineOfRotation, this.m22 / cosineOfRotation);
+  }
 
 
   static fromCtx(ctx) {
@@ -136,4 +163,8 @@ export default class Matrix {
     }
     return new Matrix(transform.m11, transform.m12, transform.m14, transform.m21, transform.m22, transform.m24, 0, 0, 1)
   }
+  // static fromTranslation(one, two) {
+  //   return this.identity.translate(one, two);
+
+  // }
 }
