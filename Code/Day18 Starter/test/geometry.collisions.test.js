@@ -111,6 +111,21 @@ describe("Collisions", function () {
         matrix: Geometry.Matrix.identity
       }
 
+      let five = {
+        geometry: new Geometry.Vector2(2,0),
+        matrix: Geometry.Matrix.identity
+      }
+
+      let six = {
+        geometry: new Geometry.Vector2(0,.5),
+        matrix: Geometry.Matrix.identity
+      }
+
+      let seven = {
+        geometry: new Geometry.Vector2(-.1,-.1),
+        matrix: Geometry.Matrix.identity
+      }
+
       let cOne = {
         geometry: new Geometry.Circle(1),
         matrix: Geometry.Matrix.identity
@@ -129,11 +144,13 @@ describe("Collisions", function () {
       expect(Collisions.collision(three, cOne)).to.be.false
       expect(Collisions.collision(cOne, three)).to.be.false
 
-      expect(Collisions.collision(one, cTwo)).to.be.false;
+      expect(Collisions.collision(one, cTwo)).to.be.true;
       expect(Collisions.collision(two, cTwo)).to.be.false;
       expect(Collisions.collision(three, cTwo)).to.be.false;
       
-      expect(Collisions.collision(four, cTwo)).to.be.true;
+      expect(Collisions.collision(four, cTwo)).to.be.false;
+      expect(Collisions.collision(five, cTwo)).to.be.true;
+      expect(Collisions.collision(six, cTwo)).to.be.true;
       
 
     })

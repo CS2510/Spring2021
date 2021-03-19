@@ -25,8 +25,18 @@ export default class Collisions {
         let _one = Matrix.multiply(one.matrix, one.geometry);
         let _two = Matrix.multiply(two.matrix, Vector3.ZeroW).asVector2();
 
+        let basis1 = new Vector2(two.matrix.m11, two.matrix.m12).scale(two.geometry.radius);
+        let basis2 = new Vector2(two.matrix.m21, two.matrix.m22).scale(two.geometry.radius);
+        let b1l = basis1.length();
+        let b2l = basis2.length();
+
+        let elipseLocation = (_one.x - _two.x) ** 2 / b1l ** 2 + (_one.y - _two.y) ** 2 / b2l ** 2 - 1;
+        if (elipseLocation <= 0) return true;
+        return false;
+
+
         let distance = Vector2.distanceBetween(_one, _two);
-        if(distance <= two.geometry.radius)
+        if (distance <= two.geometry.radius)
           return true;
         else
           return false;
@@ -38,7 +48,7 @@ export default class Collisions {
         _one.minus(two.matrix.extractTranslation());
         let corners = two.geometry.corners;
 
-        for(let i = 0; i < corners.length; i++){
+        for (let i = 0; i < corners.length; i++) {
           corners[i] = two.matrix.multiply(corners[i])
         }
 
@@ -54,21 +64,21 @@ export default class Collisions {
         );
 
         let newPoint = changeOfBasis.multiply(_one);
-        if(newPoint.x >= -v2l/2&&
-          newPoint.x <= v2l/2 &&
-          newPoint.y >= -v1l/2 &&
-          newPoint.y <= v1l/2
-          )
-        // if(newPoint.x >= -two.geometry.width/2 &&
-        //   newPoint.x <= two.geometry.width/2 &&
-        //   newPoint.y >= -two.geometry.height/2 &&
-        //   newPoint.y <= two.geometry.height/2
-        //   )
+        if (newPoint.x >= -v2l / 2 &&
+          newPoint.x <= v2l / 2 &&
+          newPoint.y >= -v1l / 2 &&
+          newPoint.y <= v1l / 2
+        )
+          // if(newPoint.x >= -two.geometry.width/2 &&
+          //   newPoint.x <= two.geometry.width/2 &&
+          //   newPoint.y >= -two.geometry.height/2 &&
+          //   newPoint.y <= two.geometry.height/2
+          //   )
           return true;
         else
           return false;
 
-        
+
       }
       else if (two.geometry instanceof Rectangle) {
         console.error("Can't do that");
