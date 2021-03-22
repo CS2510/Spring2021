@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "npx mocha"
+  },
+  "type": "module",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2"
+  }
+}
