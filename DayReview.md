@@ -146,3 +146,16 @@ This file  contains links and text after every class that you can look back to a
 - Students know the order in which to apply translate, scale, and rotate transforms
 - Students understand the basics of how a polygon geometry is created
 - Students can add child objects using JSON syntax
+
+[Spring Break]
+
+# Day 18 - 2021-03-22
+- Students will understand the basics of collision detection
+- Students can explain why collision detection is commutative
+- Students can explain how to simplify their code using the commutative nature of collision detection.
+- Students can explain the relative difficulty of doing collision detection with different representations
+- Students can distinguish between a rectangle and an axis-aligned bounding box
+- Students can distinguish between a convex and concave shape
+- Students can develop unit tests for their collision detection
+- Students can describe the theory used to detect the collision of a point and a circle
+- Students can code and test the collision of a point and circle.
