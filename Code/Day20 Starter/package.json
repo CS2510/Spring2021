@@ -1,40 +1,10 @@
 {
-  "name": "educational-game-engine",
-  "version": "0.0.1",
-  "description": "An educational game engine, designed for CSCI 2510, Intro to Game Programming at the University of Nebraska at Omaha.",
-  "main": "build.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "test": "npx mocha"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cs2510/Spring2021.git"
-  },
-  "keywords": [
-    "game",
-    "education-game",
-    "discrete-simulation"
-  ],
-  "author": "B. Ricks, PhD",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cs2510/Spring2021/issues"
-  },
-  "homepage": "https://github.com/cs2510/Spring2021#readme",
-  "dependencies": {
-    "canvas": "^2.7.0",
-    "chai": "^4.3.4",
-    "chai-arrays": "^2.2.0",
-    "mocha": "^8.3.2",
-    "sinon": "^9.2.4",
-    "sinon-chai": "^3.5.0"
-  },
   "type": "module",
-  "mocha":{
-    "require":["./test/hooks.mjs"]
+  "dependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2"
   }
-  
 }
