@@ -159,3 +159,11 @@ This file  contains links and text after every class that you can look back to a
 - Students can develop unit tests for their collision detection
 - Students can describe the theory used to detect the collision of a point and a circle
 - Students can code and test the collision of a point and circle.
+
+# Day 19 2021-03-24
+- Students will understand colliding circles based on the sum of their radii
+- Students will understand colliding circles use the inflate/deflate method
+- Students will understand colliding points and rectangles using either the inside or outside tests
+- Students can describe why outside can run faster than inside tests.
+- Students will understand how to generate the correct geometry for colliding circles and rectangles
+- Students will understand that the method shown in class does not work on rotated rectangles
