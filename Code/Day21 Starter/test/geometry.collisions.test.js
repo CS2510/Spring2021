@@ -92,6 +92,12 @@ describe("Collisions", function () {
       
 
     })
+    it("Handles advanced Vector2/Circle Collisions", function(){
+      // let vector2 = new Engine.Vector2(10, 10);
+      // let vector2Matrix = Engine.Matrix.identity;
+      // let elipse = new Engine.circle(1);
+      // let elipseMatrix = Engine.Matrix.identity.scale(2,1).rotate()
+    })
     it("Handles Vector2/Circle Collisions with scale", function () {
       let one = {
         geometry: new Geometry.Vector2(0, 0),

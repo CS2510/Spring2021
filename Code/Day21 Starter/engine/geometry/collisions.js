@@ -25,8 +25,19 @@ export default class Collisions {
         let _one = Matrix.multiply(one.matrix, one.geometry);
         let _two = Matrix.multiply(two.matrix, Vector3.ZeroW).asVector2();
 
+        //Move to the origin
+        _one.minus(_two);
+        _two.minus(_two)
+
+        //Unrotate
+        _one = Matrix.identity.rotate(-two.matrix.extractRotation()).multiply(_one);
+
+
         let basis1 = new Vector2(two.matrix.m11, two.matrix.m12).scale(two.geometry.radius);
         let basis2 = new Vector2(two.matrix.m21, two.matrix.m22).scale(two.geometry.radius);
+
+        
+
         let b1l = basis1.length();
         let b2l = basis2.length();
 

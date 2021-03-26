@@ -29,23 +29,31 @@ export default {
       }
     },
     
+    // {
+    //   gameObject: {
+    //     name: "Circle", components: [
+    //       { name: "CircleGeometryComponent", args: [50] },
+    //       { name: "DrawGeometryComponent", args: ["green"] },
+    //     ],
+    //     children:[
+    //       {
+    //         gameObject: {
+    //           name: "Rectangle", components: [
+    //             { name: "RectangleGeometryComponent", args: [100, 100] },
+    //             { name: "DrawGeometryComponent", args: ["red"] },
+    //           ]
+    //         }, x: 150, y: 50
+    //       },
+    //     ]
+    //   }, x: 0, y: 0
+    // },
     {
       gameObject: {
-        name: "Circle", components: [
+        name: "Elipse", components: [
           { name: "CircleGeometryComponent", args: [50] },
           { name: "DrawGeometryComponent", args: ["green"] },
         ],
-        children:[
-          {
-            gameObject: {
-              name: "Rectangle", components: [
-                { name: "RectangleGeometryComponent", args: [100, 100] },
-                { name: "DrawGeometryComponent", args: ["red"] },
-              ]
-            }, x: 150, y: 50
-          },
-        ]
-      }, x: 0, y: 0
+      }, x: 2, y: 30, sx:2, sy:1, r:Math.PI/4
     },
     {
       gameObject: {

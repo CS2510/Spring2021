@@ -105,7 +105,6 @@ export default class Matrix {
     this.multiply(other);
     return this;
   }
-
   multiply(other) {
     if (other instanceof Vector2) {
       return this.multiply(Vector3.fromVector2(other)).asVector2();
@@ -145,7 +144,8 @@ export default class Matrix {
     return new Vector2(this.m13, this.m23);
   }
   extractRotation() {
-    return Math.asin(this.m21);
+    //return Math.asin(this.m21);
+    return Math.atan(this.m21/this.m22);
 
   }
   extractScale() {

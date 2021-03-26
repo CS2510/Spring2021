@@ -1,9 +1,11 @@
 import canvas from "canvas";
 import chai from "chai";
 import sinon from "sinon";
+import chaiAlmost from "chai-almost";
 import sinonChai from "sinon-chai";
 const expect = chai.expect;
 chai.use(sinonChai);
+chai.use(chaiAlmost(.1));
 
 import Matrix from "../engine/geometry/matrix.js"
 import Vector2 from "../engine/geometry/vector-2.js"
@@ -98,6 +100,23 @@ describe("Matrix", function(){
       let extracted = matrix.extractRotation();
       expect(extracted).to.equal(theta);
     })
+    it("Extracts the correct rotation after scaling", function(){
+      let thetas = [Math.PI/6];
+      let scales = [[1,1], [2,3]]
+      for(let theta of thetas){
+        for(let scale of scales){
+          let scaledRotated = Matrix.identity.scale(scale[0], scale[1]).rotate(theta)
+          let extractedRotation = scaledRotated.extractRotation();
+          console.log(theta + ": " + scale);
+          expect(extractedRotation).to.almost.equal(theta);
+          let extractedScale = scaledRotated.extractScale();
+          expect(extractedScale.x).to.almost.equal(scale[0])
+          expect(extractedScale.y).to.almost.equal(scale[1])
+        }
+      }
+      
+      
+    })
     it("Extracts the correct scale of compound matrix", function(){
       let theta = Math.PI/2;
       let c = Math.cos(theta);
@@ -106,8 +125,8 @@ describe("Matrix", function(){
       let sx = 3;
       let sy = 4;
       let matrix = new Matrix(
-        sx*c,-s,0,
-        s,sy*c,0,
+        sx*c,sx*-s,0,
+        sy*s,sy*c,0,
         0,0,1
       );
       let extracted = matrix.extractRotation();
@@ -120,8 +139,8 @@ describe("Matrix", function(){
       let sx = 3;
       let sy = 4
       let matrix = new Matrix(
-        sx*c,-s,0,
-        s,sy*c,0,
+        sx*c,sx*-s,0,
+        sy*s,sy*c,0,
         0,0,1
       );
       let extracted = matrix.extractScale();
