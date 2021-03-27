@@ -22,9 +22,10 @@ export default class Matrix {
 
   }
   isIdentity() {
-    this.equals(this.identity);
+    return this.equals(Matrix.identity);
   }
   at(row, column) {
+    if(row < 0 || row > 2 || column < 0 || column > 2) throw new Error("Invalid parameters")
     return this.values[3 * row + column];
   }
   setAt(row, column, value) {

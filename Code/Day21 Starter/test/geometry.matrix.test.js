@@ -14,9 +14,122 @@ import * as EngineGeometry from "../engine/geometry/engine-geometry.js"
 
 describe("Matrix", function(){
   describe("Constructor", function(){
-    it("Reports the correct number of arguments", function(){
+    it("It creates an array of values", function(){
       let matrix = new Matrix();
       expect(matrix.values).to.be.an("array");
+    })
+    it("It creates the identity matrix when there are no arguments", function(){
+      let matrix = new Matrix();
+      for(let i = 0; i < matrix.values; i++){
+        if(i%3==0)
+          expect(matrix.values[i]).to.equal(1);
+        else
+          expect(matrix.values[i]).to.equal(0);
+
+      }
+    })
+    it("Throws an exception with the wrong number of arguments", function(){
+      for(let i = 1; i < 9; i++){
+        let array = new Array(i);
+        expect(()=>new Matrix(array)).to.throw();
+      }
+    })
+    it("Accepts nine arguments", function(){
+      let matrix = new Matrix(0, 1,2,3,4,5,6,7,8);
+      for(let i = 0; i < 9; i++){
+        expect(matrix.values[i]).to.equal(i);
+      }
+    })
+    it("Retrieves values with getters", function(){
+      let matrix = new Matrix(0, 1,2,3,4,5,6,7,8);
+      expect(matrix.m11).to.equal(0);
+      expect(matrix.m12).to.equal(1);
+      expect(matrix.m13).to.equal(2);
+      expect(matrix.m21).to.equal(3);
+      expect(matrix.m22).to.equal(4);
+      expect(matrix.m23).to.equal(5);
+      expect(matrix.m31).to.equal(6);
+      expect(matrix.m32).to.equal(7);
+      expect(matrix.m33).to.equal(8);
+    })
+  })
+
+  describe("Is Identity", function(){
+    it("Detects the identity matrix", function(){
+      let matrix = new Matrix();
+      expect(matrix.isIdentity()).to.be.true;
+    })
+    it("Detects a non-identity matrix", function(){
+      let matrix = new Matrix(1,2,3,4,5,6,7,8,9);
+      expect(matrix.isIdentity()).to.be.false;
+    })
+  })
+  describe("at", function(){
+    it("Returns the matrix value at the given position", function(){
+      let matrix = new Matrix(0, 1,2,3,4,5,6,7,8);
+      expect(matrix.at(0,0)).to.equal(0);
+      expect(matrix.at(0,1)).to.equal(1);
+      expect(matrix.at(0,2)).to.equal(2);
+      expect(matrix.at(1,0)).to.equal(3);
+      expect(matrix.at(1,1)).to.equal(4);
+      expect(matrix.at(1,2)).to.equal(5);
+      expect(matrix.at(2,0)).to.equal(6);
+      expect(matrix.at(2,1)).to.equal(7);
+      expect(matrix.at(2,2)).to.equal(8);
+
+      expect(()=>matrix.at(-1,1)).to.throw();
+      expect(()=>matrix.at(1,-1)).to.throw();
+      expect(()=>matrix.at(4,1)).to.throw();
+      expect(()=>matrix.at(1,4)).to.throw();
+      
+    })
+  })
+  describe("Set at", function(){
+    it("Sets the correct value", function(){
+      let matrix = new Matrix();
+      for(let row = 0; row < 3; row++){
+        for(let col = 0; col < 3; col++){
+          let value = Math.random();
+          matrix.setAt(row, col, value);
+          expect(matrix.at(row, col)).to.equal(value);
+        }
+      }
+    })
+  })
+  describe("Equals", function(){
+    it("Identifies equal matrices", function(){
+      expect(Matrix.identity.equals(Matrix.identity)).to.be.true;
+
+      let matrix = new Matrix(0, 1,2,3,4,5,6,7,8);
+      expect(matrix.equals(Matrix.identity)).to.be.false;
+      expect(Matrix.identity.equals(matrix)).to.be.false;
+    })
+  })
+  describe("Nearly Equals", function(){
+    it("Identifies nearly equal matrices", function(){
+      expect(Matrix.identity.nearlyEquals(Matrix.identity)).to.be.true;
+
+      let matrix = new Matrix(0, 1,2,3,4,5,6,7,8);
+      expect(matrix.nearlyEquals(Matrix.identity)).to.be.false;
+      expect(Matrix.identity.nearlyEquals(matrix)).to.be.false;
+
+      matrix = new Matrix();
+      matrix.setAt(0,0,1.1);
+      expect(matrix.nearlyEquals(Matrix.identity)).to.be.false;
+      expect(Matrix.identity.nearlyEquals(matrix)).to.be.false;
+      matrix.setAt(0,0,1.000009);
+      expect(matrix.nearlyEquals(Matrix.identity)).to.be.true;
+      expect(Matrix.identity.nearlyEquals(matrix)).to.be.true;
+
+    })
+  })
+  describe("row", function(){
+    it("Returns the correct row", function(){
+      let matrix = new Matrix(0, 1,2,3,4,5,6,7,8);
+      expect(matrix.row(0).toString()).to.equal([0,1,2].toString())
+      expect(matrix.row(1).toString()).to.equal([3,4,5].toString())
+      expect(matrix.row(2).toString()).to.equal([6,7,8].toString())
+
     })
   })
   describe("fromCtx",function(){
@@ -68,6 +181,19 @@ describe("Matrix", function(){
       expect(result).to.be.instanceOf(Matrix);
 
     })
+  })
+  describe("Rotate", function(){
+    let matrix = new Matrix();
+    matrix.rotate(.1);
+    expect(matrix.m11).to.almost.equal(Math.cos(.1))
+    expect(matrix.m12).to.almost.equal(-Math.sin(.1))
+    expect(matrix.m13).to.almost.equal(0)
+    expect(matrix.m21).to.almost.equal(Math.sin(.1))
+    expect(matrix.m22).to.almost.equal(Math.cos(.1))
+    expect(matrix.m23).to.almost.equal(0)
+    expect(matrix.m31).to.almost.equal(0)
+    expect(matrix.m32).to.almost.equal(0)
+    expect(matrix.m33).to.almost.equal(1)
   })
   describe("Extracts", function(){
     it("Extracts the correct translation", function(){
