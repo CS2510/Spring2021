@@ -167,3 +167,13 @@ This file  contains links and text after every class that you can look back to a
 - Students can describe why outside can run faster than inside tests.
 - Students will understand how to generate the correct geometry for colliding circles and rectangles
 - Students will understand that the method shown in class does not work on rotated rectangles
+
+# Day 20 2021-03-29
+- [Activity] Looking at parallax in historic games
+- Students can describe how the background, midground, and foregroud move relative to each other when a camera pans [parallax]
+- Students have an understanding of parallax when the camera both moves and rotates
+- Students understand the six possible cases with axis-aligned rectangle/axis-aligned rectangle collisions
+- Students can implement a collision function for rectangles that handle these scenarios
+- Students have a brief understanding of the separate axis theorem
+- Students have a brief understanding of how to split convex pollygons into triangles using the fan method
+- Students have a brief understanding of how to split concave polygons into triangles using the the ear lopping method.
