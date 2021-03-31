@@ -1,173 +1,58 @@
-import Vector2 from "./vector-2.js"
-import Vector3 from "./vector-3.js"
-import Line from "./line.js"
-import Circle from "./circle.js"
-import Rectangle from "./rectangle.js"
-import Matrix from "./matrix.js"
-import Polygon from "./polygon.js"
+import Point from "./vector-2.js";
+import Circle from "./circle.js";
+import Rectangle from "./rectangle.js";
 
-export default class Collisions {
-
-  static collision(one, two) {
-    if (one.geometry instanceof Vector2) {
-      if (two.geometry instanceof Vector2) {
-        let _one = Matrix.multiply(one.matrix, one.geometry);
-        let _two = Matrix.multiply(two.matrix, two.geometry);
-        if (Vector2.closeTo(_one, _two))
-          return true;
-        else
-          return false;
-      }
-      else if (two.geometry instanceof Line) {
-        console.error("Can't do that");
-      }
-      else if (two.geometry instanceof Circle) {
-        let _one = Matrix.multiply(one.matrix, one.geometry);
-        let _two = Matrix.multiply(two.matrix, Vector3.ZeroW).asVector2();
-
-        //Move to the origin
-        _one.minus(_two);
-        _two.minus(_two)
-
-        //Unrotate
-        _one = Matrix.identity.rotate(-two.matrix.extractRotation()).multiply(_one);
-
-
-        let basis1 = new Vector2(two.matrix.m11, two.matrix.m12).scale(two.geometry.radius);
-        let basis2 = new Vector2(two.matrix.m21, two.matrix.m22).scale(two.geometry.radius);
-
-        
-
-        let b1l = basis1.length();
-        let b2l = basis2.length();
-
-        let elipseLocation = (_one.x - _two.x) ** 2 / b1l ** 2 + (_one.y - _two.y) ** 2 / b2l ** 2 - 1;
-        if (elipseLocation <= 0) return true;
+export default class{
+  static inCollision(one, two){
+    if(one instanceof Point){
+      if(two instanceof Point){
         return false;
-
-
-        let distance = Vector2.distanceBetween(_one, _two);
-        if (distance <= two.geometry.radius)
-          return true;
-        else
-          return false;
-
-
       }
-      else if (two.geometry instanceof Rectangle) {
-        let _one = Matrix.multiply(one.matrix, one.geometry);
-        _one.minus(two.matrix.extractTranslation());
-        let corners = two.geometry.corners;
+      if(two instanceof Circle){
+        let distance = one.distanceTo(new Point(two.x, two.y));
+        if(distance < two.radius)
+          return true;
+        return false;
+      }
+      if(two instanceof Rectangle){
+        return one.x >= two.x && one.y >= two.y && one.x <= two.x + two.width && one.y <= two.y + two.height;
+      }
+    }
+    if(one instanceof Circle){
+      if(two instanceof Point){
+        return this.inCollision(two, one);
+      }
+      if(two instanceof Circle){
+        return false;
+      }
+      if(two instanceof Rectangle){
+        let objects = [];
+        objects.push(new Circle(two.x, two.y, one.radius))
+        objects.push(new Circle(two.x + two.width, two.y, one.radius))
+        objects.push(new Circle(two.x+ two.width, two.y + two.height, one.radius))
+        objects.push(new Circle(two.x, two.y + two.height, one.radius))
+        objects.push(new Rectangle(two.x - one.radius, two.y, two.width + one.radius * 2, two.height))
+        objects.push(new Rectangle(two.x , two.y - one.radius, two.width , two.height+ one.radius * 2))
 
-        for (let i = 0; i < corners.length; i++) {
-          corners[i] = two.matrix.multiply(corners[i])
+        for(let object of objects){
+          if(this.inCollision(new Point(one.x, one.y), object)){
+            return true;
+          }
         }
-
-        let v1 = corners[1].clone().minus(corners[0]).normalize();
-        let v2 = corners[3].clone().minus(corners[0]).normalize();
-        let v1l = corners[1].clone().minus(corners[0]).length();
-        let v2l = corners[3].clone().minus(corners[0]).length();
-
-        let changeOfBasis = new Matrix(
-          v2.x, v2.y, 0,
-          v1.x, v1.y, 0,
-          0, 0, 1
-        );
-
-        let newPoint = changeOfBasis.multiply(_one);
-        if (newPoint.x >= -v2l / 2 &&
-          newPoint.x <= v2l / 2 &&
-          newPoint.y >= -v1l / 2 &&
-          newPoint.y <= v1l / 2
-        )
-          // if(newPoint.x >= -two.geometry.width/2 &&
-          //   newPoint.x <= two.geometry.width/2 &&
-          //   newPoint.y >= -two.geometry.height/2 &&
-          //   newPoint.y <= two.geometry.height/2
-          //   )
-          return true;
-        else
-          return false;
-
-
-      }
-      else if (two.geometry instanceof Rectangle) {
-        console.error("Can't do that");
+        return false;
       }
     }
-    if (one.geometry instanceof Line) {
-      console.log("Line");
-      if (two.geometry instanceof Vector2) {
-        return this.collision(two, one);
+    if(one instanceof Rectangle){
+      if(two instanceof Point){
+        return this.inCollision(two, one);
       }
-      else if (two.geometry instanceof Line) {
-        console.error("Can't do that");
+      if(two instanceof Circle){
+        return this.inCollision(two, one)
       }
-      else if (two.geometry instanceof Circle) {
-        console.error("Can't do that");
-      }
-      else if (two.geometry instanceof Rectangle) {
-        console.error("Can't do that");
-      }
-      else if (two.geometry instanceof Polygon) {
-        console.error("Can't do that");
+      if(two instanceof Rectangle){
+        return false
       }
     }
-    if (one.geometry instanceof Circle) {
-      console.log("Circle");
-      if (two.geometry instanceof Vector2) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Line) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Circle) {
-        console.error("Can't do that");
-      }
-      else if (two.geometry instanceof Rectangle) {
-        console.error("Can't do that");
-      }
-      else if (two.geometry instanceof Polygon) {
-        console.error("Can't do that");
-      }
-    }
-    if (one.geometry instanceof Rectangle) {
-      console.log("Rectangle");
-      if (two.geometry instanceof Vector2) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Line) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Circle) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Rectangle) {
-        console.error("Can't do that");
-      }
-      else if (two.geometry instanceof Polygon) {
-        console.error("Can't do that");
-      }
-    }
-    if (one.geometry instanceof Polygon) {
-      console.log("Rectangle");
-      if (two.geometry instanceof Vector2) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Line) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Circle) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Rectangle) {
-        return this.collision(two, one);
-      }
-      else if (two.geometry instanceof Polygon) {
-        console.error("Can't do that");
-
-      }
-    }
+    return false;
   }
-
 }

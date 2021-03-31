@@ -32,7 +32,7 @@ export default {
       gameObject: {
         name: "Empty",
         components: [
-         {name: "CollisionControllerComponent"}
+         {name: "MainControllerComponent"}
         ]
       }
     },

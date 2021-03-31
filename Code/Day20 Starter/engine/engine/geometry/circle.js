@@ -1,7 +1,7 @@
-import Geometry from "./collisions.js"
-
 export default class Circle{
-  constructor(radius){
-    this.radius = radius;
+  constructor(x,y,r){
+    this.x = x;
+    this.y = y;
+    this.radius = r;
   }
 }
