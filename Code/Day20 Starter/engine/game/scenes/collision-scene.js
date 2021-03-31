@@ -36,5 +36,23 @@ export default {
         ]
       }
     },
+    {
+      gameObject:{
+        name:"CircleGameObject",
+        components:[
+          {name: "DrawGeometryComponent", args:["brown"]},
+          {name: "CircleGeometryComponent", args:[100]}
+        ]
+      }
+    },
+    {
+      gameObject:{
+        name:"RectangleGameObject",
+        components:[
+          {name: "DrawGeometryComponent", args:["yellow"]},
+          {name: "RectangleGeometryComponent", args:[50, 50]}
+        ]
+      },x:100,y:100
+    }
   ]
 }

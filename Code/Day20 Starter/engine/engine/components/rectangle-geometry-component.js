@@ -8,6 +8,6 @@ export default  class RectangleGeometryComponent extends Component{
         //We don't ask for the x and y because that comes from the game object
     }
     asGeometry(){
-        return new Rectangle(this.width, this.height);
+        return new Rectangle(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.width, this.height);
     }
 }

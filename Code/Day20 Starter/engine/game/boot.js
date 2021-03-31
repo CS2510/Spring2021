@@ -4,13 +4,7 @@ function boot(mainSceneTitle, location, options) {
   let promisesOne = [
     import("../engine/engine.js"),
   ]
-  let promisesTwo = [
-    import(`./scenes/game-scenes.js`),
-    import(`./prefabs/game-prefabs.js`),
-    import(`../engine/components/engine-components.js`),
-    import(`../engine/geometry/engine-geometry.js`),
-    import(`./components/game-components.js`),
-  ];
+ 
 
   //Add the main canvas to the DOM
   let canvas = document.createElement("canvas");
@@ -39,6 +33,14 @@ function boot(mainSceneTitle, location, options) {
       globalThis.Destroy = g => g.destroy();
       globalThis.Engine = Engine;
       globalThis.Input = Engine.Input;
+
+      let promisesTwo = [
+        import(`./scenes/game-scenes.js`),
+        import(`./prefabs/game-prefabs.js`),
+        import(`../engine/components/engine-components.js`),
+        import(`../engine/geometry/engine-geometry.js`),
+        import(`./components/game-components.js`),
+      ];
 
       return Promise.all(promisesTwo)
     })

@@ -7,6 +7,6 @@ export default  class CircleGeometryComponent extends Component{
         //We don't ask for the x and y because that comes from the game object
     }
     asGeometry(){
-        return new Circle(this.radius)
+        return new Circle(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.radius)
     }
 }
