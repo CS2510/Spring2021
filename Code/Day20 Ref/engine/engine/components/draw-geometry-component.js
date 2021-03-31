@@ -8,7 +8,7 @@ export default class DrawGeometryComponent extends Component {
     let rectangleGeometry = this.gameObject.getComponent("RectangleGeometryComponent")
     if (rectangleGeometry) {
       ctx.fillStyle = this.color;
-      ctx.fillRect(0 - rectangleGeometry.width / 2, 0 - rectangleGeometry.height / 2, rectangleGeometry.width, rectangleGeometry.height);
+      ctx.fillRect(0, 0, rectangleGeometry.width, rectangleGeometry.height);
     }
     let circleGeometry = this.gameObject.getComponent("CircleGeometryComponent");
     if (circleGeometry) {

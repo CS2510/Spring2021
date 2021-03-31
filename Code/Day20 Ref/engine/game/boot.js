@@ -70,6 +70,8 @@ function boot(mainSceneTitle, location, options) {
       Engine.SceneManager.allScenes = Object.keys(GameScenes).map(i => GameScenes[i]);
       Engine.SceneManager.changeScene(mainSceneTitle);
 
+      globalThis.SceneManager = Engine.SceneManager;
+
       
 
       /* Update and draw our game */

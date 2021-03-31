@@ -70,8 +70,8 @@ export default class Scene {
         ctx.translate(this.camera.transform.position.x, this.camera.transform.position.y)
         ctx.scale(this.camera.transform.scale.x, this.camera.transform.scale.y)
         ctx.rotate(this.camera.transform.rotation);
-        //this.camera.screenWidth = ctx.canvas.width;
-        //this.camera.screenHeight = ctx.canvas.height;
+        this.camera.screenWidth = ctx.canvas.width;
+        this.camera.screenHeight = ctx.canvas.height;
         for (let i = 0; i < this.children.length; i++) {
             let child = this.children[i];
             if (child.name == "ScreenCamera") continue;
