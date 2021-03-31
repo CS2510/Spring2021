@@ -23,7 +23,8 @@ export default class{
         return this.inCollision(two, one);
       }
       if(two instanceof Circle){
-        return false;
+        let sumRadii = one.radius + two.radius
+        return new Point(one.x, one.y).distanceTo(new Point(two.x, two.y)) < sumRadii;
       }
       if(two instanceof Rectangle){
         let objects = [];
@@ -50,7 +51,10 @@ export default class{
         return this.inCollision(two, one)
       }
       if(two instanceof Rectangle){
-        return false
+        let left = one.x;
+        let right = one.x + one.width;
+        let bottom = one.y;
+        let top = one.y+one.height;
       }
     }
     return false;
