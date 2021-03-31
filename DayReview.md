@@ -177,3 +177,11 @@ This file  contains links and text after every class that you can look back to a
 - Students have a brief understanding of the separate axis theorem
 - Students have a brief understanding of how to split convex pollygons into triangles using the fan method
 - Students have a brief understanding of how to split concave polygons into triangles using the the ear lopping method.
+
+# Day 21 2021-03-31
+- Students will be able to integrate geometry (points, circles, and rectangles) into game components
+- Students will understand how to get geometry from a game component
+- Students will be able to check for collisions using polling
+- Students will understand that collision detection only works if the objects are in the same space (i.e. world or screen)
+- Students will understand how to use rejection sampling to instantiate new game objects
+
