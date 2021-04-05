@@ -1,10 +1,12 @@
+import Vector2 from "../engine/geometry/vector-2.js"
+
 function boot(mainSceneTitle, location, options) {
 
   //Dynamically import based on the folder location of each game
   let promisesOne = [
     import("../engine/engine.js"),
   ]
- 
+
 
   //Add the main canvas to the DOM
   let canvas = document.createElement("canvas");
@@ -58,6 +60,8 @@ function boot(mainSceneTitle, location, options) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight
       let ctx = canvas.getContext("2d");
+      let deferredCanvas = document.createElement("canvas");
+      let dctx = deferredCanvas.getContext("2d");
 
       //Add event listeners to the page
       Engine.Input.attach(document);
@@ -70,21 +74,96 @@ function boot(mainSceneTitle, location, options) {
       Engine.SceneManager.allScenes = Object.keys(GameScenes).map(i => GameScenes[i]);
       Engine.SceneManager.changeScene(mainSceneTitle);
 
-      
+      let width = 640;
+      let height = 480;
+      if (options?.width) width = options.width;
+      if (options?.height) height = options.height;
+
+      Engine.SceneManager.screenWidth = width;
+      Engine.SceneManager.screenHeight = height;
+      Engine.SceneManager.screenAspectRatio = width / height;
+
+      deferredCanvas.width = width;
+      deferredCanvas.height = height;
+
+
+
 
       /* Update and draw our game */
       function gameLoop() {
         Engine.Input.SwapArrays();
         let currentScene = Engine.SceneManager.currentScene;
-        currentScene.draw(ctx);
+        currentScene.draw(dctx);
         currentScene.update();
         currentScene.cullDestroyed();
+
+        ctx.canvas.width = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+
+        let cw = ctx.canvas.width;
+        let ch = ctx.canvas.height;
+
+        let dw = dctx.canvas.width;
+        let dh = dctx.canvas.height;
+
+        ctx.fillStyle = "gray";
+        ctx.fillRect(0, 0, cw, ch);
+
+        let drawMode = "UpperRight"
+
+        //Stretch game to window
+        if (drawMode == "Stretch") {
+          ctx.drawImage(deferredCanvas, 0, 0, cw, ch);
+          //Engine.Input.Remap = p => new Vector2(p.x / cw * dw, p.y / ch * dh);
+        }
+
+        //Draw in upper-right
+        if (drawMode == "UpperRight") {
+          ctx.drawImage(deferredCanvas, 0, 0);
+          Engine.Input.Remap = p => new Vector2(p.x, p.y);
+        }
+
+        //Draw centered, but not scaled
+        if (drawMode == "Center") {
+          ctx.drawImage(deferredCanvas, (cw - dw) / 2, (ch - dh) / 2);
+          //Engine.Input.Remap = p => new Vector2(p.x - (cw - dw) / 2, p.y - (ch - dh) / 2)
+        }
+
+        //Draw centered and scaled to fit the window
+        if (drawMode == "CenterScale") {
+          let dAspectRatio = dw / dh;
+          let cAspectRatio = cw / ch;
+
+          let w = cw;
+          let h = ch;
+          if (dAspectRatio < cAspectRatio) {
+            w = h * dAspectRatio;
+          }
+          else {
+            h = w / dAspectRatio
+          }
+          ctx.drawImage(deferredCanvas, (cw - w) / 2, (ch - h) / 2, w, h);
+          // Engine.Input.Remap = p => {
+          //   let x = p.x;
+          //   let y = p.y;
+
+          //   x -= (cw - w) / 2;
+          //   y -= (ch - h) / 2;
+
+          //   x *= dw / w;
+          //   y *= dh / h;
+          //   x -= width / 2;
+          //   y -= height / 2
+
+          //   return new Vector2(x, y);
+          // }
+        }
       }
 
       let fps = 60;
       setInterval(gameLoop, 1000 / fps)
     })
-    .catch(error => "Error in promises " + error);
+    //.catch(error => "Error in promises " + error);
 }
 
 export default boot;

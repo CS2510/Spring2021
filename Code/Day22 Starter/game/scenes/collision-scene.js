@@ -19,7 +19,7 @@ export default {
               components: [
                 {
                   name: "ScreenTextComponent",
-                  args: ["Collision Scene", { alignment: "left", justification: "bottom" }]
+                  args: ["Aspect Ratios", { alignment: "left", justification: "bottom" }]
                 }
               ]
             },
