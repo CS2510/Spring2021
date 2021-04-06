@@ -82,6 +82,7 @@ export default class Scene {
 
         dctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
         dctx.fillRect(0, 0, dctx.canvas.width, dctx.canvas.height);
+        dctx.save();
 
         //Loop through all the game objects and render them.
         for (let layer of layers) {
@@ -97,6 +98,10 @@ export default class Scene {
             if (child.name == "ScreenCamera") continue;
             child.draw(layers);
         }
+        for(let layer of layers){
+            let ctx = layer.ctx;
+            ctx.restore();
+        }
         dctx.restore();
 
         //Now draw the screen camera
@@ -111,10 +116,42 @@ export default class Scene {
         for (let i = 1; i < layers.length; i++) {
             let thisCtx = layers[i].ctx;
             let thisCanvas = thisCtx.canvas
-            thisCtx.fillStyle = "blue"
-            thisCtx.fillRect(thisCanvas.width / 2, thisCanvas.height / 2, 10, 10);
             layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2, mainCanvas.height / 2 - thisCanvas.height / 2)
+            
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2) //x left
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2) //x right
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 , mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //y down
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 , mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //y up
+            
+            
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //x left + y down
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //x left + y up
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2+ mainCanvas.height) //x right + y down
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2- mainCanvas.height) //x right + y up
+
+            
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //y down + x left
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //y down + x right
+
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width , mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //y up + x left
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width , mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //y up + x Right
+
+
+
         }
+
+        //Debug the layers
+        for (let i = 1; i < layers.length; i++) {
+            let thisCtx = layers[i].ctx;
+            let thisCanvas = thisCtx.canvas
+            let renderedHeight = 100 * thisCanvas.height/thisCanvas.width;
+            layers[0].ctx.fillStyle = "rgba(255, 255, 255, .5)"
+            layers[0].ctx.fillRect( 0, (i-1) * 100, 100, 100 * thisCanvas.height/thisCanvas.width)
+            layers[0].ctx.drawImage(thisCanvas, 0, (i-1) * 100, 100, 100 * thisCanvas.height/thisCanvas.width)
+            layers[0].ctx.strokeStyle = "blue";
+            layers[0].ctx.strokeRect(25, (i-1) * 100+renderedHeight * .25, 50, .5 * renderedHeight)
+        }
+
     }
     //Getter does 2 things. 1) I call camera not getCamera().
     //2) Since there is no setter, this variable is read-only

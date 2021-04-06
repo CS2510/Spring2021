@@ -7,7 +7,7 @@ export default class AsteroidUpdateComponent extends Engine.Component {
   start() {  
     this.heading = Math.PI /4;
     // this.heading = Math.PI * 2 * Math.random();
-    this.velocity = 0;  
+    this.velocity = 1;  
     this.halfWidth = 320;
     this.halfHeight = 240;
   }
