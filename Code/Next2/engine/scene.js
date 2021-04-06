@@ -20,6 +20,7 @@ export default class Scene {
         gameObject.transform.scale.x = objectDefinition.sx || 1; //Set the x or default to 0. This is already the default, so this is redundant but very clear
         gameObject.transform.scale.y = objectDefinition.sy || 1; //Set the y or default to 0
         gameObject.transform.rotation = objectDefinition.r || 0; //Set the y or default to 0
+        gameObject.drawLayer = objectDefinition.drawLayer || "default";
 
         if (objectDefinition.enabled == true || objectDefinition.enabled == false) {
             //Funny, round about way to check defined v truthy
@@ -74,27 +75,46 @@ export default class Scene {
      * 
      * @param {2D Rendering Context from a Canvas} ctx the 2D context to which we draw
      */
-    draw(ctx) {
+    draw(layers) {
         //Clear the screen
-        ctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        layers.forEach(l => l.ctx.clearRect(0, 0, l.ctx.canvas.width, l.ctx.canvas.height));
+        let dctx = layers.find(i => i.name == "default").ctx
+
+        dctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
+        dctx.fillRect(0, 0, dctx.canvas.width, dctx.canvas.height);
 
         //Loop through all the game objects and render them.
-        ctx.save();
-        ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
-        ctx.translate(this.camera.transform.position.x, this.camera.transform.position.y)
-        ctx.scale(this.camera.transform.scale.x, this.camera.transform.scale.y)
-        ctx.rotate(this.camera.transform.rotation);
+        for (let layer of layers) {
+            let ctx = layer.ctx;
+            ctx.save();
+            ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)
+            ctx.translate(this.camera.transform.position.x, this.camera.transform.position.y)
+            ctx.scale(this.camera.transform.scale.x, this.camera.transform.scale.y)
+            ctx.rotate(this.camera.transform.rotation);
+        }
         for (let i = 0; i < this.children.length; i++) {
             let child = this.children[i];
             if (child.name == "ScreenCamera") continue;
-            child.draw(ctx);
+            child.draw(layers);
         }
-        ctx.restore();
+        dctx.restore();
+
         //Now draw the screen camera
-        ctx.save();
-        this.screenCamera.draw(ctx)
-        ctx.restore();
+        dctx.save();
+        this.screenCamera.draw(layers)
+        dctx.restore();
+
+        //Now compose the layers
+        let mainCtx = layers[0].ctx;
+        let mainCanvas = mainCtx.canvas;
+
+        for (let i = 1; i < layers.length; i++) {
+            let thisCtx = layers[i].ctx;
+            let thisCanvas = thisCtx.canvas
+            thisCtx.fillStyle = "blue"
+            thisCtx.fillRect(thisCanvas.width / 2, thisCanvas.height / 2, 10, 10);
+            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2, mainCanvas.height / 2 - thisCanvas.height / 2)
+        }
     }
     //Getter does 2 things. 1) I call camera not getCamera().
     //2) Since there is no setter, this variable is read-only

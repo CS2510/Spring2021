@@ -37,6 +37,7 @@ export default class GameObject {
         this.components.push(new Engine.TransformComponent(this))
         this._enabled = true;
         this._awoken = false;
+        this.drawLayer = "default"
 
     }
     get enabled(){
@@ -106,8 +107,9 @@ export default class GameObject {
      * Draw the game object
      * @param {2D Context from a Canvas} ctx where the game object is drawn
      */
-    draw(ctx) {//How does the game object draw itself?
+    draw(layers) {//How does the game object draw itself?
         if(!this.enabled) return;
+        let ctx = layers.find(l=>l.name == this.drawLayer).ctx
         ctx.save();
         ctx.translate(this.transform.position.x, this.transform.position.y);
         ctx.rotate(this.transform.rotation);
@@ -116,7 +118,7 @@ export default class GameObject {
             if (component.draw) component.draw(ctx);
         }
         for (let child of this.transform.children) {
-            child.draw(ctx);
+            child.draw(layers);
         }
         ctx.restore();
     }

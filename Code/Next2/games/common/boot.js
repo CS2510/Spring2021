@@ -21,6 +21,10 @@ function boot(mainSceneTitle, location, options) {
 
   let deferredCanvas = document.createElement("canvas");
   let dctx = deferredCanvas.getContext("2d");
+  dctx.name = "Default Canvas"
+  let sfxCanvas = document.createElement("canvas");
+  let sfxctx = sfxCanvas.getContext("2d");
+  sfxctx.name = "Special Effects Canvas"
 
 
 
@@ -87,11 +91,19 @@ function boot(mainSceneTitle, location, options) {
       deferredCanvas.width = width;
       deferredCanvas.height = height;
 
+      sfxCanvas.width = width * 2;
+      sfxCanvas.height = height * 2;
+
+      let drawingLayers = [
+        {name:"default", ctx: dctx},
+        {name:"sfx", ctx: sfxctx}
+      ]
+
       /* Update and draw our game */
       function gameLoop() {
         Engine.Input.SwapArrays();
         let currentScene = Engine.SceneManager.currentScene;
-        currentScene.draw(dctx);
+        currentScene.draw(drawingLayers);
         currentScene.update();
         currentScene.cullDestroyed();
 
@@ -161,7 +173,7 @@ function boot(mainSceneTitle, location, options) {
       let fps = 60;
       setInterval(gameLoop, 1000 / fps)
     })
-    .catch(error => "Error in promisesOne " + error);
+    //.catch(error => console.error(error));
 }
 
 export default boot;
