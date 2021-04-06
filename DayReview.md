@@ -185,3 +185,12 @@ This file  contains links and text after every class that you can look back to a
 - Students will understand that collision detection only works if the objects are in the same space (i.e. world or screen)
 - Students will understand how to use rejection sampling to instantiate new game objects
 
+# Day 22 2021-04-05
+- Students will understand the role of deferred buffering in a game
+- Students will understand letterboxing and pillarboxing
+- Students will understand what it means for an image to fill, stretch, or be contained in a frame
+- Students will know how to center an image in a frame
+- Students will know how to stretch an image in a frame
+- Students will know how to center and stretch an image in a frame with altering its aspect ratio
+- Students will know how to remap mouse coordinates from the screen to the world. 
+
