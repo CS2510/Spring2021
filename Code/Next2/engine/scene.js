@@ -1,3 +1,4 @@
+import { EngineComponents } from "./engine.js";
 import GameObject from "./game-object.js"
 import SceneManager from "./scene-manager.js"
 
@@ -98,7 +99,7 @@ export default class Scene {
             if (child.name == "ScreenCamera") continue;
             child.draw(layers);
         }
-        for(let layer of layers){
+        for (let layer of layers) {
             let ctx = layer.ctx;
             ctx.restore();
         }
@@ -113,28 +114,85 @@ export default class Scene {
         let mainCtx = layers[0].ctx;
         let mainCanvas = mainCtx.canvas;
 
+        let bufferCanvas = document.createElement("canvas");
+        let bctx = bufferCanvas.getContext("2d");
+        bufferCanvas.width = 2 * Engine.SceneManager.screenWidth;
+        bufferCanvas.height = 2 * Engine.SceneManager.screenHeight;
+
+        let blurCanvas = document.createElement("canvas");
+        let bbctx = blurCanvas.getContext("2d");
+        blurCanvas.width = 2 * Engine.SceneManager.screenWidth;
+        blurCanvas.height = 2 * Engine.SceneManager.screenHeight;
+
+
+
         for (let i = 1; i < layers.length; i++) {
             let thisCtx = layers[i].ctx;
             let thisCanvas = thisCtx.canvas
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2, mainCanvas.height / 2 - thisCanvas.height / 2)
+
+            let mw = mainCanvas.width;
+            let mh = mainCanvas.height;
+            let mw2 = mw / 2
+            let mh2 = mh / 2
+
+            let th2 = thisCanvas.height / 2;
+            let tw2 = thisCanvas.width / 2;
+
+            let cx = mw2 - tw2;
+            let cy = mh2 - th2;
             
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2) //x left
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2) //x right
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 , mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //y down
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 , mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //y up
-            
-            
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //x left + y down
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //x left + y up
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2+ mainCanvas.height) //x right + y down
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2- mainCanvas.height) //x right + y up
+            bctx.drawImage(thisCanvas, cx, cy)
+
+            bctx.drawImage(thisCanvas, cx - mw, cy) //x left
+            bctx.drawImage(thisCanvas, cx + mw, cy) //x right
+            bctx.drawImage(thisCanvas, cx, cy + mh) //y down
+            bctx.drawImage(thisCanvas, cx, cy - mh) //y up
+
+
+            bctx.drawImage(thisCanvas, cx - mw, cy + mh) //x left + y down
+            bctx.drawImage(thisCanvas, cx - mw, cy - mh) //x left + y up
+            bctx.drawImage(thisCanvas, cx + mw, cy + mh) //x right + y down
+            bctx.drawImage(thisCanvas, cx + mw, cy - mh) //x right + y up
+
+
+            bctx.drawImage(thisCanvas, cx - mw, cy + mh) //y down + x left
+            bctx.drawImage(thisCanvas, cx + mw, cy + mh) //y down + x right
+
+            bctx.drawImage(thisCanvas, cx - mw, cy - mh) //y up + x left
+            bctx.drawImage(thisCanvas, cx + mw, cy - mh) //y up + x Right
 
             
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //y down + x left
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width, mainCanvas.height / 2 - thisCanvas.height / 2 + mainCanvas.height) //y down + x right
+            //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
+            //This technology is not supported by safari as of 4/6/21
+            //Check https://caniuse.com/?search=canvas%20filter for updates
+            bbctx.filter = 'blur(10px)'
+            bbctx.drawImage(bufferCanvas, 0, 0);
+            bbctx.filter = 'none'
+            bbctx.drawImage(bufferCanvas, 0, 0);
 
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 - mainCanvas.width , mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //y up + x left
-            layers[0].ctx.drawImage(thisCanvas, mainCanvas.width / 2 - thisCanvas.width / 2 + mainCanvas.width , mainCanvas.height / 2 - thisCanvas.height / 2 - mainCanvas.height) //y up + x Right
+            
+
+            layers[0].ctx.drawImage(blurCanvas, 0, 0);
+
+            // layers[0].ctx.drawImage(thisCanvas, cx, cy)
+
+            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy) //x left
+            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy) //x right
+            // layers[0].ctx.drawImage(thisCanvas, cx, cy + mh) //y down
+            // layers[0].ctx.drawImage(thisCanvas, cx, cy - mh) //y up
+
+
+            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy + mh) //x left + y down
+            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy - mh) //x left + y up
+            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy + mh) //x right + y down
+            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy - mh) //x right + y up
+
+
+            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy + mh) //y down + x left
+            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy + mh) //y down + x right
+
+            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy - mh) //y up + x left
+            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy - mh) //y up + x Right
 
 
 
@@ -144,12 +202,12 @@ export default class Scene {
         for (let i = 1; i < layers.length; i++) {
             let thisCtx = layers[i].ctx;
             let thisCanvas = thisCtx.canvas
-            let renderedHeight = 100 * thisCanvas.height/thisCanvas.width;
-            layers[0].ctx.fillStyle = "rgba(255, 255, 255, .5)"
-            layers[0].ctx.fillRect( 0, (i-1) * 100, 100, 100 * thisCanvas.height/thisCanvas.width)
-            layers[0].ctx.drawImage(thisCanvas, 0, (i-1) * 100, 100, 100 * thisCanvas.height/thisCanvas.width)
+            let renderedHeight = 100 * thisCanvas.height / thisCanvas.width;
+            layers[0].ctx.fillStyle = "rgba(255, 128, 128, .5)"
+            layers[0].ctx.fillRect(0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
+            layers[0].ctx.drawImage(thisCanvas, 0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
             layers[0].ctx.strokeStyle = "blue";
-            layers[0].ctx.strokeRect(25, (i-1) * 100+renderedHeight * .25, 50, .5 * renderedHeight)
+            layers[0].ctx.strokeRect(25, (i - 1) * 100 + renderedHeight * .25, 50, .5 * renderedHeight)
         }
 
     }
