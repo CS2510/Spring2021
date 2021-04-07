@@ -1,5 +1,0 @@
-export {default as BlueRectangle} from "./blue-rectangle.js"
-export {default as ClickToDestroy} from "./click-to-destroy.js"
-export {default as KeyboardBumpRectangle} from "./keyboard-bump-rectangle.js"
-export {default as KeyboardRectangle} from "./keyboard-rectangle.js"
-export {default as RedRectangle} from "./red-rectangle.js"
