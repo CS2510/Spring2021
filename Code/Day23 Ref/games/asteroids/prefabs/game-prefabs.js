@@ -1,0 +1,1 @@
+export {default as AsteroidPrefab} from "./asteroid-prefab.js"
