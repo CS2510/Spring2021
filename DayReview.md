@@ -194,3 +194,11 @@ This file  contains links and text after every class that you can look back to a
 - Students will know how to center and stretch an image in a frame with altering its aspect ratio
 - Students will know how to remap mouse coordinates from the screen to the world. 
 
+# Day 23 2021-04-07
+- Students will be able to implement deferred rendering
+- Students understand the relationship of deferred buffering and layers
+- Students understand the painters algorithm
+- Students understand screen wrapping in terms of rendering
+- Students understand screen wrapping in terms of collisions
+- Students understand the role of a blur buffer
+- Students can implement simple special effects, such as a glowing object
