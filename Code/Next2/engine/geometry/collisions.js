@@ -114,7 +114,6 @@ export default class Collisions {
       }
     }
     if (one.geometry instanceof Circle) {
-      console.log("Circle");
       if (two.geometry instanceof Vector2) {
         return this.collision(two, one);
       }

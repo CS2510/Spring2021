@@ -6,40 +6,9 @@ function boot(mainSceneTitle, location, options) {
   let promisesOne = [
     import("../../engine/engine.js"),
   ]
-  let promisesTwo = [
-    import(`../${location}/scenes/game-scenes.js`),
-    import(`../${location}/prefabs/game-prefabs.js`),
-    import(`../../engine/components/engine-components.js`),
-    import(`../../engine/geometry/engine-geometry.js`),
-    import(`../${location}/components/game-components.js`),
-  ];
-
-  //Add the main canvas to the DOM
-  let canvas = document.createElement("canvas");
-  canvas.id = "canv";
-  document.body.appendChild(canvas);
-
-  let deferredCanvas = document.createElement("canvas");
-  let dctx = deferredCanvas.getContext("2d");
-  dctx.name = "Default Canvas"
-  let sfxCanvas = document.createElement("canvas");
-  let sfxctx = sfxCanvas.getContext("2d");
-  sfxctx.name = "Special Effects Canvas"
 
 
 
-  //Attach the CSS dynamically (saves a line in index.html)
-  //From http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml#:~:text=To%20load%20a%20.js%20or%20.css%20file%20dynamically%2C,a%20lot%20more%20fancy%20than%20it%20really%20is.
-  var fileref = document.createElement("link")
-  fileref.setAttribute("rel", "stylesheet")
-  fileref.setAttribute("type", "text/css")
-  fileref.setAttribute("href", "../common/style.css")
-  document.head.appendChild(fileref);
-
-  let title = options.title;
-  //Set the title the title argument or location if title is missing
-  if (!options.title) title = location;
-  document.title = title;
 
   Promise.all(promisesOne)
     .then(results => {
@@ -49,6 +18,14 @@ function boot(mainSceneTitle, location, options) {
       globalThis.Destroy = g => g.destroy();
       globalThis.Engine = Engine;
       globalThis.Input = Engine.Input;
+
+      let promisesTwo = [
+        import(`../${location}/scenes/game-scenes.js`),
+        import(`../${location}/prefabs/game-prefabs.js`),
+        import(`../../engine/components/engine-components.js`),
+        import(`../../engine/geometry/engine-geometry.js`),
+        import(`../${location}/components/game-components.js`),
+      ];
 
       return Promise.all(promisesTwo)
     })
@@ -62,10 +39,7 @@ function boot(mainSceneTitle, location, options) {
 
       globalThis.Geometry = EngineGeometry;
 
-      /* Setup our canvas */
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight
-      let ctx = canvas.getContext("2d");
+
 
       //Add event listeners to the page
       Engine.Input.attach(document);
@@ -88,6 +62,50 @@ function boot(mainSceneTitle, location, options) {
       Engine.SceneManager.screenHeight = height;
       Engine.SceneManager.screenAspectRatio = width / height;
 
+      //Add the main canvas to the DOM
+      let canvas = document.createElement("canvas");
+      canvas.id = "canv";
+      document.body.appendChild(canvas);
+      /* Setup our canvas */
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight
+      let ctx = canvas.getContext("2d");
+
+      let deferredCanvas = document.createElement("canvas");
+      let dctx = deferredCanvas.getContext("2d");
+      dctx.name = "Default Canvas"
+
+      let sfxCanvas = document.createElement("canvas");
+      let sfxctx = sfxCanvas.getContext("2d");
+      sfxctx.name = "Special Effects Canvas"
+
+      globalThis.bufferCanvas = document.createElement("canvas");
+      globalThis.bctx = bufferCanvas.getContext("2d");
+      globalThis.bufferCanvas.width = 2 * Engine.SceneManager.screenWidth;
+      globalThis.bufferCanvas.height = 2 * Engine.SceneManager.screenHeight;
+
+      globalThis.blurCanvas = document.createElement("canvas");
+      globalThis.bbctx = blurCanvas.getContext("2d");
+      globalThis.blurCanvas.width = 2 * Engine.SceneManager.screenWidth;
+      globalThis.blurCanvas.height = 2 * Engine.SceneManager.screenHeight;
+
+
+
+      //Attach the CSS dynamically (saves a line in index.html)
+      //From http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml#:~:text=To%20load%20a%20.js%20or%20.css%20file%20dynamically%2C,a%20lot%20more%20fancy%20than%20it%20really%20is.
+      var fileref = document.createElement("link")
+      fileref.setAttribute("rel", "stylesheet")
+      fileref.setAttribute("type", "text/css")
+      fileref.setAttribute("href", "../common/style.css")
+      document.head.appendChild(fileref);
+
+      let title = options.title;
+      //Set the title the title argument or location if title is missing
+      if (!options.title) title = location;
+      document.title = title;
+
+
+
       deferredCanvas.width = width;
       deferredCanvas.height = height;
 
@@ -95,8 +113,8 @@ function boot(mainSceneTitle, location, options) {
       sfxCanvas.height = height * 2;
 
       let drawingLayers = [
-        {name:"default", ctx: dctx},
-        {name:"sfx", ctx: sfxctx}
+        { name: "default", ctx: dctx },
+        { name: "sfx", ctx: sfxctx }
       ]
 
       /* Update and draw our game */
@@ -159,11 +177,11 @@ function boot(mainSceneTitle, location, options) {
 
             x -= (cw - w) / 2;
             y -= (ch - h) / 2;
-            
+
             x *= dw / w;
             y *= dh / h;
-            x -= width/2;
-            y -= height/2
+            x -= width / 2;
+            y -= height / 2
 
             return new Vector2(x, y);
           }
@@ -173,7 +191,7 @@ function boot(mainSceneTitle, location, options) {
       let fps = 60;
       setInterval(gameLoop, 1000 / fps)
     })
-    //.catch(error => console.error(error));
+  //.catch(error => console.error(error));
 }
 
 export default boot;

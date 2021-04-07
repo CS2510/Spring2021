@@ -79,7 +79,10 @@ export default class Scene {
     draw(layers) {
         //Clear the screen
         layers.forEach(l => l.ctx.clearRect(0, 0, l.ctx.canvas.width, l.ctx.canvas.height));
+        bctx.clearRect(0, 0, bctx.canvas.width, bctx.canvas.height);
+        bbctx.clearRect(0, 0, bbctx.canvas.width, bbctx.canvas.height);
         let dctx = layers.find(i => i.name == "default").ctx
+        
 
         dctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
         dctx.fillRect(0, 0, dctx.canvas.width, dctx.canvas.height);
@@ -114,18 +117,8 @@ export default class Scene {
         let mainCtx = layers[0].ctx;
         let mainCanvas = mainCtx.canvas;
 
-        let bufferCanvas = document.createElement("canvas");
-        let bctx = bufferCanvas.getContext("2d");
-        bufferCanvas.width = 2 * Engine.SceneManager.screenWidth;
-        bufferCanvas.height = 2 * Engine.SceneManager.screenHeight;
-
-        let blurCanvas = document.createElement("canvas");
-        let bbctx = blurCanvas.getContext("2d");
-        blurCanvas.width = 2 * Engine.SceneManager.screenWidth;
-        blurCanvas.height = 2 * Engine.SceneManager.screenHeight;
-
-
-
+        // let bctx = Engine.bctx;
+        // let bbctx = Engine.bbctx;
         for (let i = 1; i < layers.length; i++) {
             let thisCtx = layers[i].ctx;
             let thisCanvas = thisCtx.canvas
@@ -170,32 +163,7 @@ export default class Scene {
             bbctx.filter = 'none'
             bbctx.drawImage(bufferCanvas, 0, 0);
 
-            
-
             layers[0].ctx.drawImage(blurCanvas, 0, 0);
-
-            // layers[0].ctx.drawImage(thisCanvas, cx, cy)
-
-            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy) //x left
-            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy) //x right
-            // layers[0].ctx.drawImage(thisCanvas, cx, cy + mh) //y down
-            // layers[0].ctx.drawImage(thisCanvas, cx, cy - mh) //y up
-
-
-            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy + mh) //x left + y down
-            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy - mh) //x left + y up
-            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy + mh) //x right + y down
-            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy - mh) //x right + y up
-
-
-            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy + mh) //y down + x left
-            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy + mh) //y down + x right
-
-            // layers[0].ctx.drawImage(thisCanvas, cx - mw, cy - mh) //y up + x left
-            // layers[0].ctx.drawImage(thisCanvas, cx + mw, cy - mh) //y up + x Right
-
-
-
         }
 
         //Debug the layers
