@@ -1,0 +1,1 @@
+export {default as BallPrefab} from "./ball-prefab.js"
