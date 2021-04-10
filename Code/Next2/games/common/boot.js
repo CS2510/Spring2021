@@ -1,4 +1,5 @@
 import Vector2 from "../../engine/geometry/vector-2.js";
+import Time from "../../engine/time.js";
 
 function boot(mainSceneTitle, location, options) {
 
@@ -7,23 +8,13 @@ function boot(mainSceneTitle, location, options) {
     import("../../engine/engine.js"),
   ]
 
-
-
-
   Promise.all(promisesOne)
     .then(results => {
       const Engine = results[0];
-      globalThis.GameObject = Engine.GameObject;
-      globalThis.Instantiate = i => Engine.SceneManager.currentScene.instantiate(i);
-      globalThis.Destroy = g => g.destroy();
-      globalThis.Engine = Engine;
-      globalThis.Input = Engine.Input;
-
+    
       let promisesTwo = [
         import(`../${location}/scenes/game-scenes.js`),
         import(`../${location}/prefabs/game-prefabs.js`),
-        import(`../../engine/components/engine-components.js`),
-        import(`../../engine/geometry/engine-geometry.js`),
         import(`../${location}/components/game-components.js`),
       ];
 
@@ -33,30 +24,20 @@ function boot(mainSceneTitle, location, options) {
       //... and then attach them to the correct values.
       const GameScenes = results[0];
       const GamePrefabs = results[1];
-      const EngineComponents = results[2];
-      const EngineGeometry = results[3]
-      const GameComponents = results[4];
-
-      globalThis.Geometry = EngineGeometry;
-
-
-
+      const GameComponents = results[2];
+      
+      
+      
       //Add event listeners to the page
       Engine.Input.attach(document);
-
-      Engine.SceneManager.Geometry = EngineGeometry;
-
-      //Add the components, prefabs, and scenes to the SceneManager for easy access in any file
-      Engine.SceneManager.allComponents = [...Object.keys(Engine.EngineComponents).map(i => EngineComponents[i]), ...Object.keys(GameComponents).map(i => GameComponents[i])];
-      Engine.SceneManager.allPrefabs = Object.keys(GamePrefabs).map(i => GamePrefabs[i]);
-      Engine.SceneManager.allScenes = Object.keys(GameScenes).map(i => GameScenes[i]);
-      Engine.SceneManager.changeScene(mainSceneTitle);
-
+      
       //This will be our default size unless it is set in the options
       let width = 640;
       let height = 480;
       if (options?.width) width = options.width;
       if (options?.height) height = options.height;
+      
+      Engine.boot({GameScenes, GamePrefabs, GameComponents, mainSceneTitle, width, height})
 
       Engine.SceneManager.screenWidth = width;
       Engine.SceneManager.screenHeight = height;
