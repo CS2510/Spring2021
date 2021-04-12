@@ -1,5 +1,5 @@
 export default {
-  name: "MainScene",
+  name: "${name}",
   children: [
     {
       gameObject: {
@@ -14,7 +14,7 @@ export default {
           { name: "ScreenCameraComponent" }
         ], children: [
 
-          { gameObject: { name: "ScreenText", components: [{ name: "ScreenTextComponent", args: ["Gravity", { color: "white" }] }] }, x: 100, y: 40 },
+          { gameObject: { name: "ScreenText", components: [{ name: "ScreenTextComponent", args: ["${name}", { color: "white" }] }] }, x: 100, y: 40 },
         ]
       }
     },
@@ -25,9 +25,5 @@ export default {
         ]
       }
     },
-    {
-      prefabName:"BallPrefab"
-    }
-
   ]
 }

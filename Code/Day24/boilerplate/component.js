@@ -1,6 +1,6 @@
 const SceneManager = Engine.SceneManager;
 
-export default class MainControllerComponent extends Engine.Component {
+export default class ${name} extends Engine.Component {
   constructor(gameObject) {
     super(gameObject);
   }

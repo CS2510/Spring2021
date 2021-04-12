@@ -113,70 +113,8 @@ export default class Scene {
         this.screenCamera.draw(layers)
         dctx.restore();
 
-        //Now compose the layers
-        let mainCtx = layers[0].ctx;
-        let mainCanvas = mainCtx.canvas;
 
-        // let bctx = Engine.bctx;
-        // let bbctx = Engine.bbctx;
-        for (let i = 1; i < layers.length; i++) {
-            let thisCtx = layers[i].ctx;
-            let thisCanvas = thisCtx.canvas
-
-            let mw = mainCanvas.width;
-            let mh = mainCanvas.height;
-            let mw2 = mw / 2
-            let mh2 = mh / 2
-
-            let th2 = thisCanvas.height / 2;
-            let tw2 = thisCanvas.width / 2;
-
-            let cx = mw2 - tw2;
-            let cy = mh2 - th2;
-            
-            bctx.drawImage(thisCanvas, cx, cy)
-
-            bctx.drawImage(thisCanvas, cx - mw, cy) //x left
-            bctx.drawImage(thisCanvas, cx + mw, cy) //x right
-            bctx.drawImage(thisCanvas, cx, cy + mh) //y down
-            bctx.drawImage(thisCanvas, cx, cy - mh) //y up
-
-
-            bctx.drawImage(thisCanvas, cx - mw, cy + mh) //x left + y down
-            bctx.drawImage(thisCanvas, cx - mw, cy - mh) //x left + y up
-            bctx.drawImage(thisCanvas, cx + mw, cy + mh) //x right + y down
-            bctx.drawImage(thisCanvas, cx + mw, cy - mh) //x right + y up
-
-
-            bctx.drawImage(thisCanvas, cx - mw, cy + mh) //y down + x left
-            bctx.drawImage(thisCanvas, cx + mw, cy + mh) //y down + x right
-
-            bctx.drawImage(thisCanvas, cx - mw, cy - mh) //y up + x left
-            bctx.drawImage(thisCanvas, cx + mw, cy - mh) //y up + x Right
-
-            
-            //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
-            //This technology is not supported by safari as of 4/6/21
-            //Check https://caniuse.com/?search=canvas%20filter for updates
-            bbctx.filter = 'blur(10px)'
-            bbctx.drawImage(bufferCanvas, 0, 0);
-            bbctx.filter = 'none'
-            bbctx.drawImage(bufferCanvas, 0, 0);
-
-            layers[0].ctx.drawImage(blurCanvas, 0, 0);
-        }
-
-        //Debug the layers
-        for (let i = 1; i < layers.length; i++) {
-            let thisCtx = layers[i].ctx;
-            let thisCanvas = thisCtx.canvas
-            let renderedHeight = 100 * thisCanvas.height / thisCanvas.width;
-            layers[0].ctx.fillStyle = "rgba(255, 128, 128, .5)"
-            layers[0].ctx.fillRect(0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
-            layers[0].ctx.drawImage(thisCanvas, 0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
-            layers[0].ctx.strokeStyle = "blue";
-            layers[0].ctx.strokeRect(25, (i - 1) * 100 + renderedHeight * .25, 50, .5 * renderedHeight)
-        }
+        
 
     }
     //Getter does 2 things. 1) I call camera not getCamera().

@@ -1,1 +1,1 @@
-export {default as MainScene} from "./main-scene.js"
+export {default as FallScene} from "./fall-scene.js"
