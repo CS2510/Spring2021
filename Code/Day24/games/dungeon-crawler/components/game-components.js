@@ -1,0 +1,5 @@
+export {default as KeyboardMoveComponent} from "./keyboard-move-component.js"
+export {default as MainControllerComponent} from "./main-controller-component.js"
+export {default as SceneChangerComponent} from "./scene-changer-component.js"
+export {default as ScoreComponent} from "./score-component.js"
+export {default as TitleSceneCountdownComponent} from "./title-scene-countdown-component.js"
