@@ -202,3 +202,12 @@ This file  contains links and text after every class that you can look back to a
 - Students understand screen wrapping in terms of collisions
 - Students understand the role of a blur buffer
 - Students can implement simple special effects, such as a glowing object
+
+# Day 24 2021-04-12
+- Students will be able to name Newton's three laws of motion
+- Students will understand that defining units in a game is required for physics to work
+- Students will remember from calculus what a derivative and an integral are
+- Students will understand the relationship between position, velocity, and acceleration
+- Students will know how to update velocity and position during update frames
+- Students will understand the importance of including time as part of these updates
+- Students will understand the difference between an instantaneous force and an instantaneous velocity.
