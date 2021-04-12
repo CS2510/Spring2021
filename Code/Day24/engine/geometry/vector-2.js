@@ -117,6 +117,14 @@ export default class Vector2 {
     return one.closeTo(two);
   }
 
+  dot(other){
+    return this.x * other.x + this.y * other.y;
+  }
+
+  static dot(one, two){
+    return one.x * two.x + one.y * two.y;
+  }
+
   
 
 

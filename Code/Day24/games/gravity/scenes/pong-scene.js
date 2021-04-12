@@ -1,5 +1,5 @@
 export default {
-  name: "FallScene",
+  name: "PongScene",
   children: [
     {
       gameObject: {
@@ -14,20 +14,19 @@ export default {
           { name: "ScreenCameraComponent" }
         ], children: [
 
-          { gameObject: { name: "ScreenText", components: [{ name: "ScreenTextComponent", args: ["Gravity", { color: "white" }] }] }, x: 100, y: 40 },
+          { gameObject: { name: "ScreenText", components: [{ name: "ScreenTextComponent", args: ["PongScene", { color: "white" }] }] }, x: 100, y: 40 },
         ]
       }
     },
     {
       gameObject: {
-        name: "BallRigidBody", components: [
-          { name: "BallRigidBodyComponent"},
+        name: "BallPong", components: [
+          { name: "BallPongComponent"},
         ]
       }
     },
     {
-      prefabName:"BallPrefabRigidBody"
+      prefabName:"BallPongPrefab"
     }
-
   ]
 }

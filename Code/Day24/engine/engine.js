@@ -188,5 +188,6 @@ globalThis.Engine = Engine;
 globalThis.Input = Engine.Input;
 globalThis.Time = Engine.Time;
 globalThis.Geometry = EngineGeometry;
+globalThis.GetGameObject = (name)=>Engine.SceneManager.currentScene.getGameObject(name);
 
 export default Engine;
