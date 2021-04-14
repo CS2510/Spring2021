@@ -167,16 +167,16 @@ export default class Scene {
         }
 
         //Debug the layers
-        for (let i = 1; i < layers.length; i++) {
-            let thisCtx = layers[i].ctx;
-            let thisCanvas = thisCtx.canvas
-            let renderedHeight = 100 * thisCanvas.height / thisCanvas.width;
-            layers[0].ctx.fillStyle = "rgba(255, 128, 128, .5)"
-            layers[0].ctx.fillRect(0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
-            layers[0].ctx.drawImage(thisCanvas, 0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
-            layers[0].ctx.strokeStyle = "blue";
-            layers[0].ctx.strokeRect(25, (i - 1) * 100 + renderedHeight * .25, 50, .5 * renderedHeight)
-        }
+        // for (let i = 1; i < layers.length; i++) {
+        //     let thisCtx = layers[i].ctx;
+        //     let thisCanvas = thisCtx.canvas
+        //     let renderedHeight = 100 * thisCanvas.height / thisCanvas.width;
+        //     layers[0].ctx.fillStyle = "rgba(255, 128, 128, .5)"
+        //     layers[0].ctx.fillRect(0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
+        //     layers[0].ctx.drawImage(thisCanvas, 0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
+        //     layers[0].ctx.strokeStyle = "blue";
+        //     layers[0].ctx.strokeRect(25, (i - 1) * 100 + renderedHeight * .25, 50, .5 * renderedHeight)
+        // }
 
     }
     //Getter does 2 things. 1) I call camera not getCamera().

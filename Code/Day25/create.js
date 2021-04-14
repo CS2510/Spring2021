@@ -28,13 +28,13 @@ function run() {
   template = template.toString().replace("${name}", camelCase)
   console.log(template);
 
-  fs.writeFileSync(`./${location}/${command}s/${name}.js`, template)
+  fs.writeFileSync(`./games/${location}/${command}s/${name}.js`, template)
 
   //Now append to the game-command file
   let toAdd = `export {default as ${camelCase}} from './${name}.js'`
   //console.log(toAdd);
 
-  let containerPath = `./${location}/${command}s/game-${command}s.js`;
+  let containerPath = `./games/${location}/${command}s/game-${command}s.js`;
   let file = fs.readFileSync(containerPath, 'utf-8')
   file += "\n" + toAdd;
   console.log(file);

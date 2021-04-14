@@ -15,5 +15,10 @@ export default class BallRigidBodyComponent extends Engine.Component {
         prefabName:"BallPrefabRigidBody"
       });
     }
+
+    let circle = SceneManager.currentScene.getGameObject("TankCircle")
+    if(!circle) return;
+    if(circle.transform.position.y > (SceneManager.screenHeight/2)/camera.transform.scale.y)
+      Destroy(circle);
   }
 }

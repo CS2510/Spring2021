@@ -6,7 +6,7 @@ export default {
         name: "MainCamera", components: [
           { name: "WorldCameraComponent" }
         ]
-      },sx:10,sy:10
+      }, sx: 10, sy: 10
     },
     {
       gameObject: {
@@ -21,13 +21,23 @@ export default {
     {
       gameObject: {
         name: "BallRigidBody", components: [
-          { name: "BallRigidBodyComponent"},
+          { name: "BallRigidBodyComponent" },
         ]
       }
     },
     {
-      prefabName:"BallPrefabRigidBody"
+      prefabName: "BallPrefabRigidBody"
+    },
+    {
+      gameObject: {
+        name: "Tank", components: [
+          { name: "DrawGeometryComponent", args: ["green"] },
+          { name: "RectangleGeometryComponent", args: [20, 10] },
+          { name: "RotateTurretComponent" }
+        ]
+      }, x: -25, y: 20
     }
+
 
   ]
 }
