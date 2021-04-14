@@ -211,3 +211,11 @@ This file  contains links and text after every class that you can look back to a
 - Students will know how to update velocity and position during update frames
 - Students will understand the importance of including time as part of these updates
 - Students will understand the difference between an instantaneous force and an instantaneous velocity.
+
+# Day 25 2021-04-14
+- Students will be able to create a rigid body component in their engines
+- Students will understand how units affect physics in a game
+- Students will know the difference between Euclidean and polar coordinates
+- Students can name at least one benefit of using polar coordinates in physics (preservation of heading)
+- Students can convert from polar coordinates to Euclidean coordinates and then back
+- Students can determine the boundaries of the camera in world space.
