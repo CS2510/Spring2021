@@ -117,8 +117,16 @@ export default class Scene {
         let mainCtx = layers[0].ctx;
         let mainCanvas = mainCtx.canvas;
 
-        // let bctx = Engine.bctx;
-        // let bbctx = Engine.bbctx;
+        let bufferCanvas = document.createElement("canvas");
+        let bctx = bufferCanvas.getContext("2d");
+        bufferCanvas.width = 2 * Engine.SceneManager.screenWidth;
+        bufferCanvas.height = 2 * Engine.SceneManager.screenHeight;
+
+        let blurCanvas = document.createElement("canvas");
+        let bbctx = blurCanvas.getContext("2d");
+        blurCanvas.width = 2 * Engine.SceneManager.screenWidth;
+        blurCanvas.height = 2 * Engine.SceneManager.screenHeight;
+
         for (let i = 1; i < layers.length; i++) {
             let thisCtx = layers[i].ctx;
             let thisCanvas = thisCtx.canvas
