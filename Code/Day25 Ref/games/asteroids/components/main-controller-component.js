@@ -3,10 +3,25 @@ export default class MainControllerComponent extends Engine.Component {
     super(gameObject);
   }
   start() {
+    this.started = false;
+
+
   }
   update() {
+    if (!this.started) {
+      this.started = true;
+      for (let i = 0; i < 5; i++) {
+
+        let asteroidGameObject = Instantiate({ prefabName: "AsteroidPrefab" });
+        asteroidGameObject.transform.position.x = (Math.random() * 2 - 1) * 200
+        asteroidGameObject.transform.position.y = (Math.random() * 2 - 1) * 200
+        asteroidGameObject.getComponent("AsteroidUpdateComponent").heading = Math.random() * 2 * Math.PI - Math.PI;
+        console.log(asteroidGameObject.getComponent("AsteroidUpdateComponent").heading)
+      }
+    }
     //Check to see if the mouse is in collision with the wrapping asteroid
     let asteroidGameObject = Engine.SceneManager.currentScene.getGameObject("AsteroidPrefab");
+    if (!asteroidGameObject) return;
     let asteroidGeometry = asteroidGameObject.getComponent("CircleGeometryComponent").asGeometry();
     let mousePosition = Input.getMousePosition();
 
@@ -27,7 +42,6 @@ export default class MainControllerComponent extends Engine.Component {
       }
     }
 
-    if (Math.random() < .5)
-      console.log(collision);
+
   }
 }

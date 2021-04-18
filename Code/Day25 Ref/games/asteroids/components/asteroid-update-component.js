@@ -28,9 +28,9 @@ export default class AsteroidUpdateComponent extends Engine.Component {
     // this.gameObject.transform.position.x = Engine.SceneManager.screenWidth/2-1
     // this.gameObject.transform.position.y = Engine.SceneManager.screenHeight/2-1
     //Top Right
-    this.gameObject.transform.position.x = Engine.SceneManager.screenWidth/2-1
-    this.gameObject.transform.position.y = -Engine.SceneManager.screenHeight/2+1
-    //Bottom Left
+    // this.gameObject.transform.position.x = Engine.SceneManager.screenWidth/2-1
+    // this.gameObject.transform.position.y = -Engine.SceneManager.screenHeight/2+1
+    // //Bottom Left
     // this.gameObject.transform.position.x = -Engine.SceneManager.screenWidth/2+1
     // this.gameObject.transform.position.y = Engine.SceneManager.screenHeight/2-1
     //Top Left

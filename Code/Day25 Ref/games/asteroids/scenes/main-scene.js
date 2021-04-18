@@ -14,7 +14,7 @@ export default {
           { name: "ScreenCameraComponent" }
         ], children: [
 
-          { gameObject: { name: "ScreenText", components: [{ name: "ScreenTextComponent", args: ["Game Boiler Plate", { color: "white" }] }] }, x: 100, y: 40 },
+          { gameObject: { name: "ScreenText", components: [{ name: "ScreenTextComponent", args: ["Asteroids", { color: "white" }] }] }, x: 100, y: 40 },
         ]
       }
     },
@@ -25,9 +25,14 @@ export default {
         ]
       }
     },
+    // {
+    //   prefabName: "AsteroidPrefab", 
+    //   drawLayer:"sfx"
+    // },
     {
-      prefabName: "AsteroidPrefab", 
+      prefabName: "ShipPrefab",
       drawLayer:"sfx"
+      
     }
 
   ]
