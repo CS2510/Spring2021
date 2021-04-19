@@ -13,7 +13,7 @@ export default class MainControllerComponent extends Engine.Component {
       this.started = true;
       for (let i = 0; i < 5; i++) {
 
-        let asteroidGameObject = Instantiate({ prefabName: "AsteroidPrefab", drawLayer: "sfx" });
+        let asteroidGameObject = Instantiate({ prefabName: "AsteroidPrefab", drawLayer: "wrap" });
         asteroidGameObject.transform.position.x = (Math.random() * 2 - 1) * 200
         asteroidGameObject.transform.position.y = (Math.random() * 2 - 1) * 200
         asteroidGameObject.getComponent("AsteroidUpdateComponent").heading = Math.random() * 2 * Math.PI - Math.PI;

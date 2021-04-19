@@ -2,8 +2,6 @@ export default {
   name: "AsteroidPrefab", components: [
     { name: "AsteroidUpdateComponent" },
     { name: "CircleGeometryComponent", args: [50] },
-    // { name: "RectangleGeometryComponent", args: [100, 100] },
-    { name: "DrawGeometryComponent", args: ['white'] },
-    // { name: "DrawGhostGeometry", args: ['white'] }
+    { name: "DrawGeometryComponent", args: ['rgba(128, 128, 128, .5)', 'green'] },
   ]
 }

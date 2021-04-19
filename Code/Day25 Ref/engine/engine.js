@@ -52,9 +52,9 @@ class Engine {
     let dctx = deferredCanvas.getContext("2d");
     dctx.name = "Default Canvas"
 
-    let sfxCanvas = document.createElement("canvas");
-    let sfxctx = sfxCanvas.getContext("2d");
-    sfxctx.name = "Special Effects Canvas"
+    let wrapCanvas = document.createElement("canvas");
+    let wrapctx = wrapCanvas.getContext("2d");
+    wrapctx.name = "Special Effects Canvas"
 
     globalThis.bufferCanvas = document.createElement("canvas");
     globalThis.bctx = bufferCanvas.getContext("2d");
@@ -80,8 +80,8 @@ class Engine {
     deferredCanvas.width = width;
     deferredCanvas.height = height;
 
-    sfxCanvas.width = width * 2;
-    sfxCanvas.height = height * 2;
+    wrapCanvas.width = width * 2;
+    wrapCanvas.height = height * 2;
 
     let drawingLayers;
     if (options.layers) {
@@ -95,16 +95,16 @@ class Engine {
     else {
       drawingLayers = [
         { name: "default", ctx: dctx },
-        { name: "sfx", ctx: sfxctx }
+        { name: "wrap", ctx: wrapctx }
       ]
     }
 
     if(!drawingLayers.some(i=>i.name == "default"))
       drawingLayers.splice(0, 0, {name:"default", ctx: dctx})
 
-    let sfx = drawingLayers.find(i => i.name == "sfx");
-    if (sfx)
-      sfx.ctx = sfxctx;
+    let wrap = drawingLayers.find(i => i.name == "wrap");
+    if (wrap)
+      wrap.ctx = wrapctx;
 
     /* Update and draw our game */
     function gameLoop() {

@@ -131,7 +131,8 @@ export default class Scene {
             let cx = mw2 - tw2;
             let cy = mh2 - th2;
 
-            if (layers[i].name == "sfx") {
+            //Add a glow to the layer
+            if (layers[i].name == "wrap") {
 
                 bctx.drawImage(thisCanvas, cx, cy)
                 bctx.drawImage(thisCanvas, cx - mw, cy) //x left
@@ -156,28 +157,39 @@ export default class Scene {
                 //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
                 //This technology is not supported by safari as of 4/6/21
                 //Check https://caniuse.com/?search=canvas%20filter for updates
-                bbctx.filter = 'blur(10px)'
+                //bbctx.filter = 'blur(10px)'
                 bbctx.drawImage(bufferCanvas, 0, 0);
-                bbctx.filter = 'none'
+                //bbctx.filter = 'none'
                 bbctx.drawImage(bufferCanvas, 0, 0);
 
                 layers[0].ctx.drawImage(blurCanvas, 0, 0);
             }
-            else{
+            else {
                 layers[0].ctx.drawImage(layers[i].ctx.canvas, 0, 0)
             }
         }
 
         //Debug the layers
+        let debugLayerWidth = 70;
         for (let i = 1; i < layers.length; i++) {
             let thisCtx = layers[i].ctx;
             let thisCanvas = thisCtx.canvas
-            let renderedHeight = 100 * thisCanvas.height / thisCanvas.width;
-            layers[0].ctx.fillStyle = "rgba(255, 128, 128, .5)"
-            layers[0].ctx.fillRect(0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
-            layers[0].ctx.drawImage(thisCanvas, 0, (i - 1) * 100, 100, 100 * thisCanvas.height / thisCanvas.width)
+            let renderedHeight = debugLayerWidth * thisCanvas.height / thisCanvas.width;
+            layers[0].ctx.fillStyle = "rgba(128, 128, 128, .5)"
+            layers[0].ctx.fillRect(0, (i - 1) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+            layers[0].ctx.drawImage(thisCanvas, 0, (i - 1) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+
             layers[0].ctx.strokeStyle = "blue";
-            layers[0].ctx.strokeRect(25, (i - 1) * 100 + renderedHeight * .25, 50, .5 * renderedHeight)
+            if (layers[i].name == "wrap") {
+                layers[0].ctx.strokeRect(debugLayerWidth/4, (i - 1) * debugLayerWidth + renderedHeight * .25, debugLayerWidth/2, .5 * renderedHeight)
+            }
+
+            layers[0].ctx.strokeRect(0, (i - 1) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+
+            layers[0].ctx.fillStyle = "white"
+            let measure = layers[0].ctx.measureText(layers[i].name).width
+            layers[0].ctx.fillText(layers[i].name,  + debugLayerWidth/2 - measure/2, (i-1+.4)*debugLayerWidth)
+
         }
 
     }
