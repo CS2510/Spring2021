@@ -171,24 +171,24 @@ export default class Scene {
 
         //Debug the layers
         let debugLayerWidth = 70;
-        for (let i = 1; i < layers.length; i++) {
+        for (let i = 0; i < layers.length; i++) {
             let thisCtx = layers[i].ctx;
             let thisCanvas = thisCtx.canvas
             let renderedHeight = debugLayerWidth * thisCanvas.height / thisCanvas.width;
             layers[0].ctx.fillStyle = "rgba(128, 128, 128, .5)"
-            layers[0].ctx.fillRect(0, (i - 1) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
-            layers[0].ctx.drawImage(thisCanvas, 0, (i - 1) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+            layers[0].ctx.fillRect(0, (i) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+            layers[0].ctx.drawImage(thisCanvas, 0, (i) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
 
             layers[0].ctx.strokeStyle = "blue";
             if (layers[i].name == "wrap") {
-                layers[0].ctx.strokeRect(debugLayerWidth/4, (i - 1) * debugLayerWidth + renderedHeight * .25, debugLayerWidth/2, .5 * renderedHeight)
+                layers[0].ctx.strokeRect(debugLayerWidth/4, (i) * debugLayerWidth + renderedHeight * .25, debugLayerWidth/2, .5 * renderedHeight)
             }
 
-            layers[0].ctx.strokeRect(0, (i - 1) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+            layers[0].ctx.strokeRect(0, (i) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
 
             layers[0].ctx.fillStyle = "white"
             let measure = layers[0].ctx.measureText(layers[i].name).width
-            layers[0].ctx.fillText(layers[i].name,  + debugLayerWidth/2 - measure/2, (i-1+.4)*debugLayerWidth)
+            layers[0].ctx.fillText(layers[i].name,  + debugLayerWidth/2 - measure/2, (i+.4)*debugLayerWidth)
 
         }
 
