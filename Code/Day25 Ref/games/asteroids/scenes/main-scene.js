@@ -31,7 +31,7 @@ export default {
     // },
     {
       prefabName: "ShipPrefab",
-      drawLayer:"sfx"
+      drawLayer:"foreground"
       
     }
 

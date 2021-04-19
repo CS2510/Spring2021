@@ -82,7 +82,7 @@ export default class Scene {
         bctx.clearRect(0, 0, bctx.canvas.width, bctx.canvas.height);
         bbctx.clearRect(0, 0, bbctx.canvas.width, bbctx.canvas.height);
         let dctx = layers.find(i => i.name == "default").ctx
-        
+
 
         dctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
         dctx.fillRect(0, 0, dctx.canvas.width, dctx.canvas.height);
@@ -130,36 +130,42 @@ export default class Scene {
             let tw2 = thisCanvas.width / 2;
             let cx = mw2 - tw2;
             let cy = mh2 - th2;
-            
-            bctx.drawImage(thisCanvas, cx, cy)
-            bctx.drawImage(thisCanvas, cx - mw, cy) //x left
-            bctx.drawImage(thisCanvas, cx + mw, cy) //x right
-            bctx.drawImage(thisCanvas, cx, cy + mh) //y down
-            bctx.drawImage(thisCanvas, cx, cy - mh) //y up
+
+            if (layers[i].name == "sfx") {
+
+                bctx.drawImage(thisCanvas, cx, cy)
+                bctx.drawImage(thisCanvas, cx - mw, cy) //x left
+                bctx.drawImage(thisCanvas, cx + mw, cy) //x right
+                bctx.drawImage(thisCanvas, cx, cy + mh) //y down
+                bctx.drawImage(thisCanvas, cx, cy - mh) //y up
 
 
-            bctx.drawImage(thisCanvas, cx - mw, cy + mh) //x left + y down
-            bctx.drawImage(thisCanvas, cx - mw, cy - mh) //x left + y up
-            bctx.drawImage(thisCanvas, cx + mw, cy + mh) //x right + y down
-            bctx.drawImage(thisCanvas, cx + mw, cy - mh) //x right + y up
+                bctx.drawImage(thisCanvas, cx - mw, cy + mh) //x left + y down
+                bctx.drawImage(thisCanvas, cx - mw, cy - mh) //x left + y up
+                bctx.drawImage(thisCanvas, cx + mw, cy + mh) //x right + y down
+                bctx.drawImage(thisCanvas, cx + mw, cy - mh) //x right + y up
 
 
-            bctx.drawImage(thisCanvas, cx - mw, cy + mh) //y down + x left
-            bctx.drawImage(thisCanvas, cx + mw, cy + mh) //y down + x right
+                bctx.drawImage(thisCanvas, cx - mw, cy + mh) //y down + x left
+                bctx.drawImage(thisCanvas, cx + mw, cy + mh) //y down + x right
 
-            bctx.drawImage(thisCanvas, cx - mw, cy - mh) //y up + x left
-            bctx.drawImage(thisCanvas, cx + mw, cy - mh) //y up + x Right
+                bctx.drawImage(thisCanvas, cx - mw, cy - mh) //y up + x left
+                bctx.drawImage(thisCanvas, cx + mw, cy - mh) //y up + x Right
 
 
-            //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
-            //This technology is not supported by safari as of 4/6/21
-            //Check https://caniuse.com/?search=canvas%20filter for updates
-            bbctx.filter = 'blur(10px)'
-            bbctx.drawImage(bufferCanvas, 0, 0);
-            bbctx.filter = 'none'
-            bbctx.drawImage(bufferCanvas, 0, 0);
+                //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
+                //This technology is not supported by safari as of 4/6/21
+                //Check https://caniuse.com/?search=canvas%20filter for updates
+                bbctx.filter = 'blur(10px)'
+                bbctx.drawImage(bufferCanvas, 0, 0);
+                bbctx.filter = 'none'
+                bbctx.drawImage(bufferCanvas, 0, 0);
 
-            layers[0].ctx.drawImage(blurCanvas, 0, 0);
+                layers[0].ctx.drawImage(blurCanvas, 0, 0);
+            }
+            else{
+                layers[0].ctx.drawImage(layers[i].ctx.canvas, 0, 0)
+            }
         }
 
         //Debug the layers

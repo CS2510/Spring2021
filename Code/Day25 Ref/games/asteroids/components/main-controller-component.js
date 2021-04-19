@@ -1,3 +1,4 @@
+
 export default class MainControllerComponent extends Engine.Component {
   constructor(gameObject) {
     super(gameObject);
@@ -12,11 +13,27 @@ export default class MainControllerComponent extends Engine.Component {
       this.started = true;
       for (let i = 0; i < 5; i++) {
 
-        let asteroidGameObject = Instantiate({ prefabName: "AsteroidPrefab" });
+        let asteroidGameObject = Instantiate({ prefabName: "AsteroidPrefab", drawLayer: "sfx" });
         asteroidGameObject.transform.position.x = (Math.random() * 2 - 1) * 200
         asteroidGameObject.transform.position.y = (Math.random() * 2 - 1) * 200
         asteroidGameObject.getComponent("AsteroidUpdateComponent").heading = Math.random() * 2 * Math.PI - Math.PI;
-        console.log(asteroidGameObject.getComponent("AsteroidUpdateComponent").heading)
+
+      }
+      //Draw starfield
+      for (let i = 0; i < 10; i++) {
+        let star = Instantiate(
+          {
+            gameObject: {
+              name: "Star", components: [
+                { name: "CircleGeometryComponent", args: [2] },
+                { name: "DrawGeometryComponent", args: ['red'] },
+              ]
+            }, drawLayer: "background"
+          }
+        )
+        star.transform.position.x = (Math.random() * 2 - 1) * (Engine.SceneManager.screenWidth/2/Engine.SceneManager.currentScene.camera.transform.scale.x);
+        star.transform.position.y = (Math.random() * 2 - 1) * (Engine.SceneManager.screenHeight/2/Engine.SceneManager.currentScene.camera.transform.scale.y);
+        console.log("hi")
       }
     }
     //Check to see if the mouse is in collision with the wrapping asteroid
@@ -41,6 +58,8 @@ export default class MainControllerComponent extends Engine.Component {
         )
       }
     }
+
+
 
 
   }
