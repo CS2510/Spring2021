@@ -13,7 +13,7 @@ export default class MainControllerComponent extends Engine.Component {
       this.started = true;
       for (let i = 0; i < 5; i++) {
 
-        let asteroidGameObject = Instantiate({ prefabName: "AsteroidPrefab", drawLayer: "default" });
+        let asteroidGameObject = Instantiate({ prefabName: "AsteroidPrefab"});
         asteroidGameObject.transform.position.x = (Math.random() * 2 - 1) * 200
         asteroidGameObject.transform.position.y = (Math.random() * 2 - 1) * 200
         asteroidGameObject.getComponent("AsteroidUpdateComponent").heading = Math.random() * 2 * Math.PI - Math.PI;
@@ -29,7 +29,7 @@ export default class MainControllerComponent extends Engine.Component {
                 { name: "CircleGeometryComponent", args: [1] },
                 { name: "DrawGeometryComponent", args: ['yellow'] },
               ]
-            }, drawLayer: "default"
+            }
           }
         )
         star.transform.position.x = (Math.random() * 2 - 1) * (Engine.SceneManager.screenWidth/2/Engine.SceneManager.currentScene.camera.transform.scale.x);

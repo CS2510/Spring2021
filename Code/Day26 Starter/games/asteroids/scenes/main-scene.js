@@ -26,7 +26,7 @@ export default {
                   ] 
                 }
               ] 
-            }, x: 100, y: 40, drawLayer:"default" },
+            }, x: 100, y: 40},
         ]
       }
     },
@@ -37,13 +37,8 @@ export default {
         ]
       }
     },
-    // {
-    //   prefabName: "AsteroidPrefab", 
-    //   drawLayer:"sfx"
-    // },
     {
-      prefabName: "ShipPrefab",
-      drawLayer:"default"
+      prefabName: "ShipPrefab"
       
     }
 
