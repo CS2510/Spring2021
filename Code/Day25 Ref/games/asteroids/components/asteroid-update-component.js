@@ -1,4 +1,3 @@
-const SceneManager = Engine.SceneManager;
 
 export default class AsteroidUpdateComponent extends Engine.Component {
   constructor(gameObject) {
@@ -8,8 +7,8 @@ export default class AsteroidUpdateComponent extends Engine.Component {
     this.heading = Math.PI /4;
     // this.heading = Math.PI * 2 * Math.random();
     this.velocity = 1;  
-    this.halfWidth = 320;
-    this.halfHeight = 240;
+    this.halfWidth = Engine.SceneManager.screenWidth/2;
+    this.halfHeight = Engine.SceneManager.screenHeight/2;
   }
   update() {
     this.gameObject.transform.position.x += Math.cos(this.heading)*this.velocity;

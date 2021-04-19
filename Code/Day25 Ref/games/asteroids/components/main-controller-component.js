@@ -20,15 +20,16 @@ export default class MainControllerComponent extends Engine.Component {
 
       }
       //Draw starfield
-      for (let i = 0; i < 10; i++) {
+      let starCount = 100;
+      for (let i = 0; i < starCount; i++) {
         let star = Instantiate(
           {
             gameObject: {
               name: "Star", components: [
-                { name: "CircleGeometryComponent", args: [2] },
-                { name: "DrawGeometryComponent", args: ['red'] },
+                { name: "CircleGeometryComponent", args: [1] },
+                { name: "DrawGeometryComponent", args: ['yellow'] },
               ]
-            }, drawLayer: "background"
+            }, drawLayer: "midground"
           }
         )
         star.transform.position.x = (Math.random() * 2 - 1) * (Engine.SceneManager.screenWidth/2/Engine.SceneManager.currentScene.camera.transform.scale.x);

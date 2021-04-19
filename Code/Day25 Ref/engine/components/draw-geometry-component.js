@@ -1,11 +1,13 @@
 import Component from "../component.js"
 export default class DrawGeometryComponent extends Component {
-  constructor(gameObject, fillColor, strokeColor = null) {
+  constructor(gameObject, fillColor, strokeColor = null, strokeWidth=1) {
     super(gameObject);
     this.fillColor = fillColor;
     this.strokeColor = strokeColor;
+    this.strokeWidth = strokeWidth;
   }
   draw(ctx) {
+    ctx.lineWidth = this.strokeWidth;
     let rectangleGeometry = this.gameObject.getComponent("RectangleGeometryComponent")
     if (rectangleGeometry) {
       if (this.fillColor) {
