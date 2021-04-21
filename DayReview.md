@@ -219,3 +219,17 @@ This file  contains links and text after every class that you can look back to a
 - Students can name at least one benefit of using polar coordinates in physics (preservation of heading)
 - Students can convert from polar coordinates to Euclidean coordinates and then back
 - Students can determine the boundaries of the camera in world space.
+
+# Day 26 2021-04-19
+- Students will understand how layers affect drawing order
+- Students can identify problems that can arise when there is no layering system
+- Students can explain the difference between world space layers and screen space layers
+- Students understand the role of a glow layer
+- Students unedrstand the role of a wrapping layer
+
+# Day 27 2021-04-21
+- Students will understand the role of the transition layer
+- Students can explain problem that can arise if there is not a transition layer
+- Students can convert from screen space to world space
+- Students can convert from world space to screen space
+- Students will have a basic understanding of fonts (ascenders, baseline, descenders, kerning, etc.)
