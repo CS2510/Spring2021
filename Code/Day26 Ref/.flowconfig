@@ -1,0 +1,13 @@
+[ignore]
+
+[include]
+./games/picker-game/**.js
+
+[libs]
+
+[lints]
+
+[options]
+
+
+[strict]

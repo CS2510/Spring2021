@@ -90,6 +90,7 @@ export default class Scene {
 
         //Loop through all the game objects and render them.
         for (let layer of layers) {
+            if(layer.name=="screen") continue;
             let ctx = layer.ctx;
             ctx.save();
             ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)

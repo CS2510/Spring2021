@@ -1,3 +1,4 @@
+//@flow
 export { default as Scene } from "./scene.js"
 export { default as GameObject } from "./game-object.js"
 export { default as Component } from "./component.js"

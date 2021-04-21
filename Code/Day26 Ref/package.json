@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "npx mocha"
+    "test": "npx mocha",
+    "flow":"flow"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "chai": "^4.3.4",
     "chai-almost": "^1.0.1",
     "chai-arrays": "^2.2.0",
+    "flow-bin": "^0.149.0",
     "fs-extra": "^9.1.0",
     "mocha": "^8.3.2",
     "ncp": "^2.0.0",
