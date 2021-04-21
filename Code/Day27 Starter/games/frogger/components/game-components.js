@@ -1,0 +1,6 @@
+export {default as KeyboardBumpComponent} from "./keyboard-bump-component.js"
+export {default as MainControllerComponent} from "./main-controller-component.js"
+export {default as MoveCarComponent} from "./move-car-component.js"
+export {default as SceneChangerComponent} from "./scene-changer-component.js"
+export {default as ScoreComponent} from "./score-component.js"
+export {default as TitleSceneCountdownComponent} from "./title-scene-countdown-component.js"

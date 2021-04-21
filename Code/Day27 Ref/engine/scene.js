@@ -1,3 +1,4 @@
+import { EngineComponents } from "./engine.js";
 import GameObject from "./game-object.js"
 import SceneManager from "./scene-manager.js"
 
@@ -20,6 +21,7 @@ export default class Scene {
         gameObject.transform.scale.x = objectDefinition.sx || 1; //Set the x or default to 0. This is already the default, so this is redundant but very clear
         gameObject.transform.scale.y = objectDefinition.sy || 1; //Set the y or default to 0
         gameObject.transform.rotation = objectDefinition.r || 0; //Set the y or default to 0
+        gameObject.drawLayer = objectDefinition.drawLayer || "default";
 
         if (objectDefinition.enabled == true || objectDefinition.enabled == false) {
             //Funny, round about way to check defined v truthy
@@ -74,27 +76,123 @@ export default class Scene {
      * 
      * @param {2D Rendering Context from a Canvas} ctx the 2D context to which we draw
      */
-    draw(ctx) {
+    draw(layers) {
         //Clear the screen
-        ctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        layers.forEach(l => l.ctx.clearRect(0, 0, l.ctx.canvas.width, l.ctx.canvas.height));
+        bctx.clearRect(0, 0, bctx.canvas.width, bctx.canvas.height);
+        bbctx.clearRect(0, 0, bbctx.canvas.width, bbctx.canvas.height);
+        let dctx = layers.find(i => i.name == "default").ctx
+
+
+        dctx.fillStyle = this.camera.getComponent("WorldCameraComponent").color;
+        dctx.fillRect(0, 0, dctx.canvas.width, dctx.canvas.height);
+        dctx.save();
 
         //Loop through all the game objects and render them.
-        ctx.save();
-        ctx.translate(ctx.canvas.width/2, ctx.canvas.height/2)
-        ctx.translate(this.camera.transform.position.x, this.camera.transform.position.y)
-        ctx.scale(this.camera.transform.scale.x, this.camera.transform.scale.y)
-        ctx.rotate(this.camera.transform.rotation);
+        for (let layer of layers) {
+            if(layer.name=="screen") continue;
+            let ctx = layer.ctx;
+            ctx.save();
+            ctx.translate(ctx.canvas.width / 2, ctx.canvas.height / 2)
+            ctx.translate(this.camera.transform.position.x, this.camera.transform.position.y)
+            ctx.scale(this.camera.transform.scale.x, this.camera.transform.scale.y)
+            ctx.rotate(this.camera.transform.rotation);
+        }
         for (let i = 0; i < this.children.length; i++) {
             let child = this.children[i];
             if (child.name == "ScreenCamera") continue;
-            child.draw(ctx);
+            child.draw(layers);
         }
-        ctx.restore();
+        for (let layer of layers) {
+            let ctx = layer.ctx;
+            ctx.restore();
+        }
+        dctx.restore();
+
         //Now draw the screen camera
-        ctx.save();
-        this.screenCamera.draw(ctx)
-        ctx.restore();
+        dctx.save();
+        this.screenCamera.draw(layers)
+        dctx.restore();
+
+        //Now compose the layers
+        let mainCtx = layers[0].ctx;
+        let mainCanvas = mainCtx.canvas;
+
+        // let bctx = Engine.bctx;
+        // let bbctx = Engine.bbctx;
+        for (let i = 1; i < layers.length; i++) {
+            let thisCtx = layers[i].ctx;
+            let thisCanvas = thisCtx.canvas
+            let mw = mainCanvas.width;
+            let mh = mainCanvas.height;
+            let mw2 = mw / 2
+            let mh2 = mh / 2
+            let th2 = thisCanvas.height / 2;
+            let tw2 = thisCanvas.width / 2;
+            let cx = mw2 - tw2;
+            let cy = mh2 - th2;
+
+            //Add a glow to the layer
+            if (layers[i].name == "wrap") {
+
+                bctx.drawImage(thisCanvas, cx, cy)
+                bctx.drawImage(thisCanvas, cx - mw, cy) //x left
+                bctx.drawImage(thisCanvas, cx + mw, cy) //x right
+                bctx.drawImage(thisCanvas, cx, cy + mh) //y down
+                bctx.drawImage(thisCanvas, cx, cy - mh) //y up
+
+
+                bctx.drawImage(thisCanvas, cx - mw, cy + mh) //x left + y down
+                bctx.drawImage(thisCanvas, cx - mw, cy - mh) //x left + y up
+                bctx.drawImage(thisCanvas, cx + mw, cy + mh) //x right + y down
+                bctx.drawImage(thisCanvas, cx + mw, cy - mh) //x right + y up
+
+
+                bctx.drawImage(thisCanvas, cx - mw, cy + mh) //y down + x left
+                bctx.drawImage(thisCanvas, cx + mw, cy + mh) //y down + x right
+
+                bctx.drawImage(thisCanvas, cx - mw, cy - mh) //y up + x left
+                bctx.drawImage(thisCanvas, cx + mw, cy - mh) //y up + x Right
+
+
+                //https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
+                //This technology is not supported by safari as of 4/6/21
+                //Check https://caniuse.com/?search=canvas%20filter for updates
+                //bbctx.filter = 'blur(10px)'
+                bbctx.drawImage(bufferCanvas, 0, 0);
+                //bbctx.filter = 'none'
+                bbctx.drawImage(bufferCanvas, 0, 0);
+
+                layers[0].ctx.drawImage(blurCanvas, 0, 0);
+            }
+            else {
+                layers[0].ctx.drawImage(layers[i].ctx.canvas, 0, 0)
+            }
+        }
+
+        //Debug the layers
+        let debugLayerWidth = 70;
+        for (let i = 0; i < layers.length; i++) {
+            let thisCtx = layers[i].ctx;
+            let thisCanvas = thisCtx.canvas
+            let renderedHeight = debugLayerWidth * thisCanvas.height / thisCanvas.width;
+            layers[0].ctx.fillStyle = "rgba(128, 128, 128, .5)"
+            layers[0].ctx.fillRect(0, (i) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+            layers[0].ctx.drawImage(thisCanvas, 0, (i) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+
+            layers[0].ctx.strokeStyle = "blue";
+            if (layers[i].name == "wrap") {
+                layers[0].ctx.strokeRect(debugLayerWidth/4, (i) * debugLayerWidth + renderedHeight * .25, debugLayerWidth/2, .5 * renderedHeight)
+            }
+
+            layers[0].ctx.strokeRect(0, (i) * debugLayerWidth, debugLayerWidth, debugLayerWidth * thisCanvas.height / thisCanvas.width)
+
+            layers[0].ctx.fillStyle = "white"
+            let measure = layers[0].ctx.measureText(layers[i].name).width
+            layers[0].ctx.fillText(layers[i].name,  + debugLayerWidth/2 - measure/2, (i+.4)*debugLayerWidth)
+
+        }
+
     }
     //Getter does 2 things. 1) I call camera not getCamera().
     //2) Since there is no setter, this variable is read-only
@@ -145,6 +243,7 @@ export default class Scene {
     instantiate(objectDescription) {
         let newObject = Scene.deserializeObject(objectDescription, false);
         this.addChild(newObject)
+        return newObject;
 
     }
 
