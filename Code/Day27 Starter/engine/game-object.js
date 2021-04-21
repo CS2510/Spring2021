@@ -109,18 +109,24 @@ export default class GameObject {
      */
     draw(layers) {//How does the game object draw itself?
         if(!this.enabled) return;
-        let ctx = layers.find(l=>l.name == this.drawLayer).ctx
+        for (let layer of layers) {
+            
+            let ctx = layer.ctx
         ctx.save();
         ctx.translate(this.transform.position.x, this.transform.position.y);
         ctx.rotate(this.transform.rotation);
         ctx.scale(this.transform.scale.x, this.transform.scale.y)
+        }
+        let ctx = layers.find(l=>l.name == this.drawLayer).ctx
         for (let component of this.components) {
             if (component.draw) component.draw(ctx);
         }
         for (let child of this.transform.children) {
             child.draw(layers);
         }
-        ctx.restore();
+        for (let layer of layers) {
+            layer.ctx.restore();
+        }
     }
 
     /**

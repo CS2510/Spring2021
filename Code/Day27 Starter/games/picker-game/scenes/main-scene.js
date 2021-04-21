@@ -34,8 +34,23 @@ export default {
         name: "CenterSquare", components: [
           { name: "DrawGeometryComponent", args: ["yellow"] },
           { name: "RectangleGeometryComponent", args: [1, 1] }
+        ],
+        children: [
+          {
+            gameObject: {
+              name: "ChildSquare", 
+              components: [
+                { name: "DrawGeometryComponent", args: ["magenta"] },
+                { name: "RectangleGeometryComponent", args: [1, 1] }
+              ],
+
+            },
+            drawLayer: "main",
+            x: 1,
+            y: 1,
+          }
         ]
-      }, x: 0, y: 0, drawLayer: "main"
+      }, x: 0, y: 0, drawLayer: "background"
     },
     {
       gameObject: {
