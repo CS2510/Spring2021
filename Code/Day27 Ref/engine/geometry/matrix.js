@@ -164,8 +164,24 @@ export default class Matrix {
     }
     return new Matrix(transform.m11, transform.m12, transform.m14, transform.m21, transform.m22, transform.m24, 0, 0, 1)
   }
-  // static fromTranslation(one, two) {
-  //   return this.identity.translate(one, two);
+  inverse(){
+    let a = this.m11;
+    let b = this.m12;
+    let c = this.m21;
+    let d = this.m22;
+    let dx = this.m13;
+    let dy = this.m23;
+    let determinantScaleRotate = 1/(a*d-b*c);
+    this.m11 = determinantScaleRotate * d;
+    this.m12 = determinantScaleRotate * -b;
+    this.m21 = determinantScaleRotate * -c;
+    this.m22 = determinantScaleRotate * a;
+    this.m13 = -dx;
+    this.m23 = -dy;
+    return this;
 
-  // }
+  }
+  static inverse(m){
+    return new Matrix(m).invert();
+  }
 }
