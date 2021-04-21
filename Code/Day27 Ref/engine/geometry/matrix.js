@@ -55,6 +55,16 @@ export default class Matrix {
   get m32() { return this.at(2, 1) }
   get m33() { return this.at(2, 2) }
 
+  set m11(value) { return this.setAt(0, 0, value) }
+  set m12(value) { return this.setAt(0, 1, value) }
+  set m13(value) { return this.setAt(0, 2, value) }
+  set m21(value) { return this.setAt(1, 0, value) }
+  set m22(value) { return this.setAt(1, 1, value) }
+  set m23(value) { return this.setAt(1, 2, value) }
+  set m31(value) { return this.setAt(2, 0, value) }
+  set m32(value) { return this.setAt(2, 1, value) }
+  set m33(value) { return this.setAt(2, 2, value) }
+
   row(r) {
     return this.values.slice(0 + 3 * r, 3 + 3 * r);
   }
