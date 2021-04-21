@@ -16,7 +16,9 @@ export default {
           { gameObject: { name: "ScreenText", components: [{ name: "ScreenTextComponent", args: ["Picker Test", { color: "black" }] }] }, x: 100, y: 40, drawLayer: "screen" },
           { gameObject: { name: "ScreenLocation", components: [{ name: "ScreenTextComponent", args: ["Screen Text", { color: "red", font: "10pt Arial" }] }] }, x: 100, y: 60, drawLayer: "screen" },
           { gameObject: { name: "WorldLocation", components: [{ name: "ScreenTextComponent", args: ["World Text", { color: "green", font: "10pt Arial" }] }] }, x: 100, y: 80, drawLayer: "screen" },
-          { gameObject: { name: "TransitionText", components: [{ name: "ScreenTextComponent", args: ["Transition Text", { color: "blue", font: "10pt Arial" }] }] }, x: 0, y: 0, drawLayer: "transition" },
+          { gameObject: { name: "CameraTranslate", components: [{ name: "ScreenTextComponent", args: ["CameraTransform", { color: "blue", font: "10pt Arial" }] }] }, x: 100, y: 100, drawLayer: "screen" },
+          { gameObject: { name: "CameraScale", components: [{ name: "ScreenTextComponent", args: ["CameraTransform", { color: "blue", font: "10pt Arial" }] }] }, x: 100, y: 120, drawLayer: "screen" },
+          { gameObject: { name: "TransitionText", components: [{ name: "ScreenTextComponent", args: ["Transition Text", { color: "black", font: "10pt Arial" }] }] }, x: 0, y: 0, drawLayer: "transition" },
         ]
       }
     },
