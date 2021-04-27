@@ -233,3 +233,10 @@ This file  contains links and text after every class that you can look back to a
 - Students can convert from screen space to world space
 - Students can convert from world space to screen space
 - Students will have a basic understanding of fonts (ascenders, baseline, descenders, kerning, etc.)
+
+# Day 28 2021-04-27
+- Students will have a basic understanding of development ops in a game context
+- Students will have a basic understanding of version control systems
+- Students will know how to publish their games on the internet
+- Students will have basic understanding of domain names
+- Students will know about free resources for them to publish their games.
