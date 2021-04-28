@@ -1,6 +1,21 @@
 # Looking at the bigger picture 
 A background in game development opens a host of doors.
 
+## Undergraduate Research
+
+[Data Visualization](https://use.vg/6JA4wJ)
+
+[VR Stroke Rehab Planes](https://use.vg/Qz46os)
+
+[VR Patient Triage](https://app.vidgrid.com/view/BqL8LiVMarqc/?sr=EGQREm)
+
+[VRS Stroke Rehab Balloons](https://www.youtube.com/embed/LfAHFnMkWT0)
+
+## Graduate Research
+[Real-time water simulation](https://www.youtube.com/embed/LxPUsliRwGs)
+
+
+
 ## Automotive
 
 [Unity + Volvo](https://www.youtube.com/watch_popup?v=mj7TYBisWB8&list=PLX2vGYjWbI0RXvmysSRXYS2tcYyrNhb6J)
