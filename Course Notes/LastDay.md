@@ -11,6 +11,8 @@ A background in game development opens a host of doors.
 
 [VRS Stroke Rehab Balloons](https://www.youtube.com/embed/LfAHFnMkWT0)
 
+[DFA Game (Senior Capstone)](https://www.youtube.com/embed/qpb-w62Z4Gs)
+
 ## Graduate Research
 [Real-time water simulation](https://www.youtube.com/embed/LxPUsliRwGs)
 
